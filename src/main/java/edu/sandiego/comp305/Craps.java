@@ -1,8 +1,6 @@
 package edu.sandiego.comp305;
 
-public class PaiGow implements Game {
-
-    private DeckOfCards deck;
+public class Craps implements Game {
 
     @Override
     public int handleBet(int amount) {
@@ -17,5 +15,9 @@ public class PaiGow implements Game {
     @Override
     public void updateBalance(int amount) {
 
+    }
+
+    public int rollDie(){
+        return null;
     }
 }
