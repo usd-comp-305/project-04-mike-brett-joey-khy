@@ -2,7 +2,7 @@ package edu.sandiego.comp305;
 
 import org.junit.jupiter.api.Test;
 
-public class PaiGowTest {
+public class CrapsTest {
 
     @Test
     void testHandleBet() {
@@ -17,5 +17,9 @@ public class PaiGowTest {
     @Test
     void testUpdateBalance() {
 
+    }
+
+    @Test
+    void rollDie(){
     }
 }
