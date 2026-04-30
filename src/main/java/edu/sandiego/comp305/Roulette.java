@@ -1,6 +1,10 @@
 package edu.sandiego.comp305;
 
+import java.util.ArrayList;
+
 public class Roulette {
+
+    private ArrayList<RouletteSpace> wheel;
 
     public int handleBet(int amount) {
         return 0;
