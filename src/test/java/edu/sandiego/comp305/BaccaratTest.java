@@ -108,6 +108,13 @@ public class BaccaratTest {
     }
 
     @Test
+    void NeitherHasNaturalTest(){
+        baccarat.setPlayerTotal(3);
+        baccarat.setBankerTotal(4);
+        assertFalse(baccarat.isNatural());
+    }
+
+    @Test
     void PlayerDoesNotDrawOnNaturalTest(){
         baccarat.setPlayerTotal(8);
         baccarat.setBankerTotal(2);
@@ -315,5 +322,29 @@ public class BaccaratTest {
         baccarat.setBankerTotal(6);
         baccarat.setPlayerTotal(6);
         assertEquals("tie", baccarat.determineWinner());
+    }
+
+    @Test
+    void HandleBetReturnPositiveWhenBetOnMatchesWinnerTest(){
+        baccarat.setBetOn("player");
+        baccarat.setBankerTotal(2);
+        baccarat.setPlayerTotal(8);
+        assertTrue(baccarat.handleBet(100)>0);
+    }
+
+    @Test
+    void HandleBetReturnNegativeWhenBetOnMatchesWinnerTest(){
+        baccarat.setBetOn("player");
+        baccarat.setBankerTotal(8);
+        baccarat.setPlayerTotal(2);
+        assertEquals(-100, baccarat.handleBet(100));
+    }
+
+    @Test
+    void HandleBetReturnTieWhenBetOnTieWinsTest(){
+        baccarat.setBetOn("tie");
+        baccarat.setBankerTotal(8);
+        baccarat.setPlayerTotal(8);
+        assertEquals(800,baccarat.handleBet(100));
     }
 }
