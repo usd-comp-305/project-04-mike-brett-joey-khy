@@ -316,14 +316,4 @@ public class BaccaratTest {
         baccarat.setPlayerTotal(6);
         assertEquals("tie", baccarat.determineWinner());
     }
-
-    @Test
-    void UpdateBalanceReturnPositiveAmount(){
-        assertEquals(200, baccarat.updateBalance(200));
-    }
-
-    @Test
-    void UpdateBalanceReturnNegativeAmount(){
-        assertEquals(-200, baccarat.updateBalance(-200));
-    }
 }

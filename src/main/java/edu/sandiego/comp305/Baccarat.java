@@ -149,7 +149,7 @@ public class Baccarat implements Game{
     }
 
     @Override
-    public void playGame(){
+    public int playGame(){
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         System.out.println("Welcome to Baccarat. Enter who you would like to be on (player/banker/tie): ");
         betOn = scanner.next().toLowerCase();
@@ -182,16 +182,16 @@ public class Baccarat implements Game{
         System.out.println("You bet on: " + betOn);
         int netWin = handleBet(bet);
         updateBalance(netWin);
+        return netWin;
     }
 
     @Override
-    public int updateBalance(int amount){
+    public void updateBalance(int amount){
         if (amount > 0) {
             System.out.println("Game result: +" + amount);
         } else {
             System.out.println("Game result: " + amount);
         }
-        return amount;
     }
 
     public int getPlayerTotal(){return playerTotal;}
