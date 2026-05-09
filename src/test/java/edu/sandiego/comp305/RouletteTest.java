@@ -32,6 +32,11 @@ public class RouletteTest {
     }
 
     @Test
+    void testUpdateBalance(){
+
+    }
+
+    @Test
     void testSpinWheel() {
         when(mockRng.nextInt(MAX_NUM_ON_WHEEL)).thenReturn(1);
         assertEquals(Color.RED, wheel.spinWheel());
