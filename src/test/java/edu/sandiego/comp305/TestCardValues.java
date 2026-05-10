@@ -9,5 +9,10 @@ public class TestCardValues {
         int aceVal = CardValues.ACE.getCardValue();
         assertEquals(1, aceVal);
     }
+    @Test
+    void testGetCorrectFaceValueKing(){
+        int kingVal = CardValues.KING.getCardValue();
+        assertEquals(10, kingVal);
+    }
 
 }
