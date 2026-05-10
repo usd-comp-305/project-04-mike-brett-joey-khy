@@ -52,13 +52,10 @@ public class RouletteTest {
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(0);
         assertEquals(Color.GREEN, wheel.spinWheel());
     }
-    @Test
-    void testCorrectWheelSize(){
-
-    }
 
     @Test
     void testLastSpaceIsCorrectColor(){
-
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(36);
+        assertEquals(Color.BLACK, wheel.spinWheel());
     }
 }
