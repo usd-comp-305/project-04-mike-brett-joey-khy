@@ -3,6 +3,7 @@ package edu.sandiego.comp305;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Roulette implements Game{
     private RouletteWheel wheel;
@@ -35,6 +36,10 @@ public class Roulette implements Game{
         List<Color> colors = wheel.getWheel();
 
         return colors.get(randomSelection);
+    }
+
+    public int getUserWager() {
+        return 0;
     }
 
 }

@@ -58,4 +58,9 @@ public class RouletteTest {
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(36);
         assertEquals(Color.BLACK, wheel.spinWheel());
     }
+
+    @Test
+    void testGetUserWager(){
+
+    }
 }
