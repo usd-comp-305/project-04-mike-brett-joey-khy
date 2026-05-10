@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.when;
 public class RouletteTest {
     private Roulette wheel;
     private Random mockRng;
+    private Scanner mockScanner;
     private final int MAX_SPACES_ON_WHEEL = 37;
 
     @BeforeEach
@@ -61,6 +63,7 @@ public class RouletteTest {
 
     @Test
     void testGetUserWager(){
-
+        when(mockScanner.nextInt()).thenReturn(1);
+        assertEquals(1, wheel.getUserWager());
     }
 }
