@@ -9,9 +9,11 @@ public class Roulette implements Game{
     private RouletteWheel wheel;
     private static final int MAX_SPACES_ON_WHEEL = 37;
     private Random rng;
+    private Scanner scanner;
 
-    public Roulette(Random rng){
+    public Roulette(Random rng, Scanner scanner){
         this.rng = rng;
+        this.scanner = scanner;
         wheel = new RouletteWheel();
     }
 
@@ -39,7 +41,15 @@ public class Roulette implements Game{
     }
 
     public int getUserWager() {
-        return 0;
+        System.out.println("What is your wager? (Enter only an int)");
+        System.out.println("1 for Red");
+        System.out.println("2 for Black");
+        System.out.println("3 for Green");
+        System.out.println("4 for Even");
+        System.out.println("5 for Odd");
+        System.out.println("6 for a specific number");
+
+        return scanner.nextInt();
     }
 
 }

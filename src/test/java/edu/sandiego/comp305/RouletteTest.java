@@ -19,7 +19,8 @@ public class RouletteTest {
     @BeforeEach
     void createTestObjects(){
         mockRng = mock(Random.class);
-        wheel = new Roulette(mockRng);
+        mockScanner = mock(Scanner.class);
+        wheel = new Roulette(mockRng, mockScanner);
     }
 
     @Test
