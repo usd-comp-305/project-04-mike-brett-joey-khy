@@ -4,28 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Roulette {
+public class Roulette implements Game{
     private RouletteWheel wheel;
     private static final int MAX_SPACES_ON_WHEEL = 37;
+    private Random rng;
 
-    public Roulette(){
+    public Roulette(Random rng){
+        this.rng = rng;
         wheel = new RouletteWheel();
     }
 
+    @Override
     public int handleBet(int amount) {
+        // DO NEXT
         return 0;
     }
 
+   @Override
     public int playGame() {
         return 0;
     }
 
+    @Override
     public void updateBalance(int amount) {
 
     }
 
     public Color spinWheel() {
-        Random rng = new Random();
         int randomSelection = rng.nextInt(MAX_SPACES_ON_WHEEL);
         List<Color> colors = wheel.getWheel();
 
