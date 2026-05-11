@@ -25,9 +25,8 @@ public class DeckOfCards {
 
     public static Card dealCard(ArrayList<Card> deck){
         Card dealtCard = deck.getFirst();
+        deck.remove(dealtCard);
         return dealtCard;
     }
-
-    void removeCard(){}
 
 }

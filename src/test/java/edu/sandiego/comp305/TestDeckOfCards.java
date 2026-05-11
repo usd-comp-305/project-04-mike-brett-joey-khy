@@ -88,4 +88,10 @@ public class TestDeckOfCards {
         assertEquals(Suit.CLUB, card.getSuit());
     }
 
+    @Test
+    void testDealRemovesCardFromDeck(){
+        Card card = DeckOfCards.dealCard(deck);
+        assertNotEquals(card, deck.getFirst());
+    }
+
 }
