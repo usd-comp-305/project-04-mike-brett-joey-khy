@@ -75,4 +75,12 @@ public class RouletteTest {
         when(mockScanner.nextInt()).thenReturn(1);
         assertEquals(1, wheel.getUserWager());
     }
+
+    @Test
+    void testGetUserNumberWager(){
+        when(mockScanner.nextInt()).thenReturn(6).thenReturn(30);
+        wheel.getUserWager();
+        assertEquals(30, wheel.getUserWager());
+
+    }
 }
