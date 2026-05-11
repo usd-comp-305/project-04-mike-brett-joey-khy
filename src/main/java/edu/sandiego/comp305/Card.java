@@ -2,12 +2,17 @@ package edu.sandiego.comp305;
 
 public class Card {
     Suit suit;
-    String faceValue;
+    CardValues cardValue;
+
+    Card(Suit suit, CardValues cardValue){
+        this.cardValue = cardValue;
+        this.suit = suit;
+    }
 
     Suit getSuit(){
-        return null;
+        return suit;
     }
-    String getFaceValue(){
-        return null;
+    CardValues getFaceValue(){
+        return cardValue;
     }
 }
