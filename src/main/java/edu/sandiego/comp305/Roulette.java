@@ -10,6 +10,9 @@ public class Roulette implements Game{
     private static final int MAX_SPACES_ON_WHEEL = 37;
     private Random rng;
     private Scanner scanner;
+    private int userWagerChoice;
+    private int lastSpinNumber;
+    private Color lastSpinColor;
 
     public Roulette(Random rng, Scanner scanner){
         this.rng = rng;
@@ -19,7 +22,9 @@ public class Roulette implements Game{
 
     @Override
     public int handleBet(int amount) {
-        // DO NEXT
+        if (userWagerChoice == 1 && lastSpinColor.equals(Color.RED)) {
+            return amount;
+        }
         return 0;
     }
 
@@ -34,10 +39,11 @@ public class Roulette implements Game{
     }
 
     public Color spinWheel() {
-        int randomSelection = rng.nextInt(MAX_SPACES_ON_WHEEL);
+        int lastSpinNumber = rng.nextInt(MAX_SPACES_ON_WHEEL);
         List<Color> colors = wheel.getWheel();
+        lastSpinColor = colors.get(lastSpinNumber);
 
-        return colors.get(randomSelection);
+        return lastSpinColor;
     }
 
     public int getUserWager() {
@@ -49,7 +55,8 @@ public class Roulette implements Game{
         System.out.println("5 for Odd");
         System.out.println("6 for a specific number");
 
-        return scanner.nextInt();
+        userWagerChoice = scanner.nextInt();
+        return userWagerChoice;
     }
 
 }
