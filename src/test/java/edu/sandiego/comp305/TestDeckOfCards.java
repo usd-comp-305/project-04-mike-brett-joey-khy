@@ -24,9 +24,37 @@ public class TestDeckOfCards {
 
     @Test
     void testFistCardIsAceOfClubs(){
-        assertEquals(CardValues.ACE, deck.getFirst().cardValue);
-        assertEquals(Suit.CLUB, deck.getFirst().suit);
+        assertEquals(CardValues.ACE, deck.getFirst().getFaceValue());
+        assertEquals(Suit.CLUB, deck.getFirst().getSuit());
         }
+
+    @Test
+    void testAceOfHeartsISCorrect(){
+        Card card = deck.get(13);
+        assertEquals(CardValues.ACE, card.getFaceValue());
+        assertEquals(Suit.HEART, card.getSuit());
+    }
+
+    @Test
+    void testAceOfDiamondsIsCorrect(){
+        Card card = deck.get(26);
+        assertEquals(CardValues.ACE, card.getFaceValue());
+        assertEquals(Suit.DIAMOND, card.getSuit());
+    }
+
+    @Test
+    void testAceOfSpadesIsCorrect(){
+        Card card = deck.get(39);
+        assertEquals(CardValues.ACE, card.getFaceValue());
+        assertEquals(Suit.SPADE, card.getSuit());
+    }
+
+    @Test
+    void testLastCardIsKingOfSpades(){
+        assertEquals(CardValues.KING, deck.getLast().getFaceValue());
+        assertEquals(Suit.SPADE, deck.getLast().getSuit());
+    }
+
 
 
 
