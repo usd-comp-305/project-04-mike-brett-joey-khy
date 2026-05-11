@@ -2,7 +2,6 @@ package edu.sandiego.comp305;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -19,14 +18,13 @@ public class TestDeckOfCards {
     @Test
     void testCreatesDeckWith52Cards(){
         assertEquals(52, deck.size());
-
     }
 
     @Test
     void testFistCardIsAceOfClubs(){
         assertEquals(CardValues.ACE, deck.getFirst().getFaceValue());
         assertEquals(Suit.CLUB, deck.getFirst().getSuit());
-        }
+    }
 
     @Test
     void testAceOfHeartsISCorrect(){
@@ -62,7 +60,7 @@ public class TestDeckOfCards {
             originalValues.add(card.getFaceValue());
         }
 
-        DeckOfCards.shuffle(deck);
+        DeckOfCards.shuffleDeck(deck);
 
         boolean different = false;
 
@@ -71,13 +69,12 @@ public class TestDeckOfCards {
                 different = true;
             }
         }
-        assert(different);
+        assertTrue(different);
     }
 
     @Test
     void testShuffleDoesNotRemoveCards(){
-        DeckOfCards.shuffle(deck);
-
+        DeckOfCards.shuffleDeck(deck);
         assertEquals(52, deck.size());
     }
 

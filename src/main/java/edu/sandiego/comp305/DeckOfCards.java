@@ -1,11 +1,8 @@
 package edu.sandiego.comp305;
-import java.util.Collection;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class DeckOfCards {
-    public List<Card> deck;
 
     public static ArrayList<Card> createDeckOfCards(){
         ArrayList<Card> deck = new ArrayList<>();
@@ -18,7 +15,7 @@ public class DeckOfCards {
         return deck;
     }
 
-    public static ArrayList<Card> shuffle(ArrayList<Card> deck){
+    public static ArrayList<Card> shuffleDeck(ArrayList<Card> deck){
         Collections.shuffle(deck);
         return deck;
     }
