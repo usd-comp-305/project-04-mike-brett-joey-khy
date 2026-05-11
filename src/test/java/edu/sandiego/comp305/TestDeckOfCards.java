@@ -74,4 +74,11 @@ public class TestDeckOfCards {
         assert(different);
     }
 
+    @Test
+    void checkShuffleDoesNotRemoveCards(){
+        DeckOfCards.shuffle(deck);
+
+        assertEquals(52, deck.size());
+    }
+
 }
