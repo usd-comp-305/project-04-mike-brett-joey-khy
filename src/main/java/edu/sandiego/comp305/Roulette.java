@@ -11,6 +11,7 @@ public class Roulette implements Game{
     private Random rng;
     private Scanner scanner;
     private int userWagerChoice;
+    private int userNumberChoice;
     private int lastSpinNumber;
     private Color lastSpinColor;
 
@@ -56,7 +57,14 @@ public class Roulette implements Game{
         System.out.println("6 for a specific number");
 
         userWagerChoice = scanner.nextInt();
+
+        if (userWagerChoice == 6){
+            System.out.println("Enter the number you would like to bet on: ");
+            userNumberChoice = scanner.nextInt();
+            return userWagerChoice;
+        }
         return userWagerChoice;
     }
+
 
 }
