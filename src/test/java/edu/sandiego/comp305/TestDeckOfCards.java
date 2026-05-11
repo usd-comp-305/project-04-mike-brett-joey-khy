@@ -84,8 +84,8 @@ public class TestDeckOfCards {
     @Test
     void testDealReturnsFirstCard(){
         Card card = DeckOfCards.dealCard(deck);
-        assertEquals(CardValues.ACE, deck.getFirst().getFaceValue());
-        assertEquals(Suit.CLUB, deck.getFirst().getSuit());
+        assertEquals(CardValues.ACE, card.getFaceValue());
+        assertEquals(Suit.CLUB, card.getSuit());
     }
 
 }
