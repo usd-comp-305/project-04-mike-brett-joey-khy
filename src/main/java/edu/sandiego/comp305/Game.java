@@ -4,7 +4,7 @@ public interface Game {
 
     int handleBet(int amount);
 
-    int playGame();
+    void playGame();
 
-    void updateBalance(int amount);
+    void updateBalance(int amountWonOrLost);
 }
