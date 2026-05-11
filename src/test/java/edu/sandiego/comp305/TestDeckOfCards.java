@@ -56,7 +56,7 @@ public class TestDeckOfCards {
     }
 
     @Test
-    void checkShuffleChangesOrder(){
+    void testShuffleChangesOrder(){
         ArrayList<CardValues> originalValues = new ArrayList<>();
         for(Card card : deck){
             originalValues.add(card.getFaceValue());
@@ -75,10 +75,17 @@ public class TestDeckOfCards {
     }
 
     @Test
-    void checkShuffleDoesNotRemoveCards(){
+    void testShuffleDoesNotRemoveCards(){
         DeckOfCards.shuffle(deck);
 
         assertEquals(52, deck.size());
+    }
+
+    @Test
+    void testDealReturnsFirstCard(){
+        Card card = DeckOfCards.dealCard(deck);
+        assertEquals(CardValues.ACE, deck.getFirst().getFaceValue());
+        assertEquals(Suit.CLUB, deck.getFirst().getSuit());
     }
 
 }

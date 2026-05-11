@@ -18,12 +18,14 @@ public class DeckOfCards {
         return deck;
     }
 
-    private ArrayList<Card> shuffle(ArrayList<Card> deck){
+    public static ArrayList<Card> shuffle(ArrayList<Card> deck){
+        Collections.shuffle(deck);
         return deck;
     }
 
-    public Card dealCard(){
-        return null;
+    public static Card dealCard(ArrayList<Card> deck){
+        Card dealtCard = deck.getFirst();
+        return dealtCard;
     }
 
     void removeCard(){}
