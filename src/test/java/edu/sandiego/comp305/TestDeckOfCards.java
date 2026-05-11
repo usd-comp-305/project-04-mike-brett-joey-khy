@@ -1,9 +1,9 @@
 package edu.sandiego.comp305;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TestDeckOfCards {
@@ -55,7 +55,23 @@ public class TestDeckOfCards {
         assertEquals(Suit.SPADE, deck.getLast().getSuit());
     }
 
+    @Test
+    void checkShuffleChangesOrder(){
+        ArrayList<CardValues> originalValues = new ArrayList<>();
+        for(Card card : deck){
+            originalValues.add(card.getFaceValue());
+        }
 
+        DeckOfCards.shuffle(deck);
 
+        boolean different = false;
+
+        for(int i = 0; i < deck.size(); i++){
+            if(deck.get(i).getFaceValue().getCardValue() != originalValues.get(i).getCardValue()){
+                different = true;
+            }
+        }
+        assert(different);
+    }
 
 }
