@@ -15,6 +15,7 @@ public class RouletteTest {
     private Random mockRng;
     private Scanner mockScanner;
     private final int MAX_SPACES_ON_WHEEL = 37;
+    private int amountWagered = 10;
 
     @BeforeEach
     void createTestObjects(){
@@ -27,78 +28,85 @@ public class RouletteTest {
     void testHandleBetWinOnRed(){
         int redSpaceOnWheel = 1;
         int userGuessesRed = 1;
+        int amountWon = 10;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(redSpaceOnWheel);
         when(mockScanner.nextInt()).thenReturn(userGuessesRed);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(10, wheel.handleBet(10));
+        assertEquals(amountWon, wheel.handleBet(amountWagered));
     }
 
     @Test
     void testHandleBetLoseOnRed() {
         int redSpaceOnWheel = 1;
         int userGuessesBlack = 2;
+        int amountLost = -10;
+
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(redSpaceOnWheel);
         when(mockScanner.nextInt()).thenReturn(userGuessesBlack);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(-10, wheel.handleBet(10));
+        assertEquals(amountLost, wheel.handleBet(amountWagered));
     }
 
     @Test
     void testHandleBetWinOnGreen(){
         int greenSpaceOnWheel = 0;
         int userGuessesGreen = 3;
+        int amountWon = 350;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(greenSpaceOnWheel);
         when(mockScanner.nextInt()).thenReturn(userGuessesGreen);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(350, wheel.handleBet(10));
+        assertEquals(amountWon, wheel.handleBet(amountWagered));
     }
 
     @Test
     void testHandleBetLoseOnGreen(){
         int redSpaceOnWheel = 1;
         int userGuessesGreen = 3;
+        int amountLost = -10;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(redSpaceOnWheel);
         when(mockScanner.nextInt()).thenReturn(userGuessesGreen);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(-10, wheel.handleBet(10));
+        assertEquals(amountLost, wheel.handleBet(amountWagered));
     }
 
     @Test
     void testHandleBetWinOnEven(){
         int evenSpaceOnWheel = 2;
         int userGuessesEven = 4;
+        int amountWon = 10;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(evenSpaceOnWheel);
         when(mockScanner.nextInt()).thenReturn(userGuessesEven);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(10, wheel.handleBet(10));
+        assertEquals(amountWon, wheel.handleBet(amountWagered));
     }
 
     @Test
     void testHandleBetLoseOnEven(){
         int evenSpaceOnWheel = 2;
         int userGuessesOdd = 5;
+        int amountLost = -10;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(evenSpaceOnWheel);
         when(mockScanner.nextInt()).thenReturn(userGuessesOdd);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(-10, wheel.handleBet(10));
+        assertEquals(amountLost, wheel.handleBet(amountWagered));
     }
 
     @Test
@@ -106,13 +114,14 @@ public class RouletteTest {
         int winningNumber = 5;
         int userGuessesNumber = 6;
         int userGuessesWinningNumber = 5;
+        int amountWon = 350;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(winningNumber);
         when(mockScanner.nextInt()).thenReturn(userGuessesNumber).thenReturn(userGuessesWinningNumber);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(350, wheel.handleBet(10));
+        assertEquals(amountWon, wheel.handleBet(amountWagered));
     }
 
     @Test
@@ -120,62 +129,73 @@ public class RouletteTest {
         int winningNumber = 5;
         int userGuessesNumber = 6;
         int userGuessesWinningNumber = 4;
+        int amountLost = 10;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(winningNumber);
         when(mockScanner.nextInt()).thenReturn(userGuessesNumber).thenReturn(userGuessesWinningNumber);
 
         wheel.getUserWager();
         wheel.spinWheel();
 
-        assertEquals(-10, wheel.handleBet(10));
+        assertEquals(amountLost, wheel.handleBet(amountWagered));
     }
 
     @Test
     void testSpinWheelFirstRed() {
-        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(1);
+        int redSpaceOnWheel = 1;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(redSpaceOnWheel);
         assertEquals(Color.RED, wheel.spinWheel());
     }
 
     @Test
     void testSpinWheelFirstBlack(){
-        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(2);
+        int blackSpaceOnWheel = 2;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(blackSpaceOnWheel);
         assertEquals(Color.BLACK, wheel.spinWheel());
     }
 
     @Test
     void testSpinWheelGreen(){
-        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(0);
+        int greenSpaceOnWheel = 0;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(greenSpaceOnWheel);
         assertEquals(Color.GREEN, wheel.spinWheel());
     }
 
     @Test
     void testLastSpaceIsCorrectColor(){
-        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(36);
+        int lastSpaceOnWheel = 36;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(lastSpaceOnWheel);
         assertEquals(Color.BLACK, wheel.spinWheel());
     }
 
     @Test
-    void testGetUserWager(){
-        when(mockScanner.nextInt()).thenReturn(1);
-        assertEquals(1, wheel.getUserWager());
+    void testGetUserWagerColor(){
+        int redSpaceOnWheel = 1;
+        int userGuessesRed = 1;
+        when(mockScanner.nextInt()).thenReturn(redSpaceOnWheel);
+        assertEquals(userGuessesRed, wheel.getUserWager());
     }
 
     @Test
     void testGetUserNumberWager(){
-        when(mockScanner.nextInt()).thenReturn(6).thenReturn(30);
-        wheel.getUserWager();
-        assertEquals(30, wheel.getUserWager());
-
+        int userGuessesNumberOption = 6;
+        int userGuessesSpecificNumber = 30;
+        when(mockScanner.nextInt()).thenReturn(userGuessesNumberOption).thenReturn(userGuessesSpecificNumber);
+        assertEquals(userGuessesNumberOption, wheel.getUserWager());
     }
 
     @Test
     void testGetUserWagerInvalidUpperWager() {
-        when(mockScanner.nextInt()).thenReturn(7).thenReturn(1);
-        assertEquals(1, wheel.getUserWager());
+        int highValueNotInWagerMenu = 7;
+        int userGuessesRed = 1;
+        when(mockScanner.nextInt()).thenReturn(highValueNotInWagerMenu).thenReturn(userGuessesRed);
+        assertEquals(userGuessesRed, wheel.getUserWager());
     }
 
     @Test
     void testGetUserWagerInvalidLowerWager(){
-        when(mockScanner.nextInt()).thenReturn(0).thenReturn(1);
-        assertEquals(1, wheel.getUserWager());
+        int lowValueNotInWagerMenu = 0;
+        int userGuessesRed = 1;
+        when(mockScanner.nextInt()).thenReturn(lowValueNotInWagerMenu).thenReturn(userGuessesRed);
+        assertEquals(userGuessesRed, wheel.getUserWager());
     }
 }
