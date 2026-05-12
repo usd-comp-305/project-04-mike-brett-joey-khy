@@ -32,7 +32,7 @@ public class Roulette implements Game{
             case 3: return lastSpinColor.equals(Color.GREEN) ? amount * singleOptionMultiplier : -amount;
             case 4: return lastSpinNumber % evenOrOddFactor == 0 ? amount : -amount;
             case 5: return lastSpinNumber % evenOrOddFactor != 0 ? amount : -amount;
-
+            case 6: return lastSpinNumber == userNumberChoice ? amount * singleOptionMultiplier : -amount;
             default: return 0;
         }
     }
@@ -48,7 +48,7 @@ public class Roulette implements Game{
     }
 
     public Color spinWheel() {
-        int lastSpinNumber = rng.nextInt(MAX_SPACES_ON_WHEEL);
+        lastSpinNumber = rng.nextInt(MAX_SPACES_ON_WHEEL);
         List<Color> colors = wheel.getWheel();
         lastSpinColor = colors.get(lastSpinNumber);
 
