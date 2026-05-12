@@ -7,32 +7,45 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CrapsTest {
 
+    private static final int STARTING_BALANCE = 1000;
+    private static final int DIE_MINIMUM_VALUE = 1;
+    private static final int DIE_FACE_COUNT = 6;
+    private static final int MINIMUM_ROLL_VALUE = 2;
+    private static final int MAXIMUM_ROLL_VALUE = 12;
+    private static final int TEST_ITERATIONS = 100;
+    private static final int TEST_BET_AMOUNT = 100;
+
     private Craps craps;
 
     @BeforeEach
     void setUp() {
-        Casino.balance = 1000;
+        Casino.balance = STARTING_BALANCE;
         craps = new Craps();
     }
 
     @Test
+    void initialPointTargetIsZero() {
+        assertEquals(0, craps.getPoint());
+    }
+
+    @Test
     void initialStateIsComingOut() {
-        assertTrue(craps.getPoint() == 0);
+        assertInstanceOf(ComingOutState.class, craps.getCurrentState());
     }
 
     @Test
     void rollDieIsInValidRange() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < TEST_ITERATIONS; i++) {
             int result = craps.rollDie();
-            assertTrue(result >= 1 && result <= 6);
+            assertTrue(result >= DIE_MINIMUM_VALUE && result <= DIE_FACE_COUNT);
         }
     }
 
     @Test
     void rollIsInValidRange() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < TEST_ITERATIONS; i++) {
             int result = craps.roll();
-            assertTrue(result >= 2 && result <= 12);
+            assertTrue(result >= MINIMUM_ROLL_VALUE && result <= MAXIMUM_ROLL_VALUE);
         }
     }
 
@@ -43,19 +56,19 @@ public class CrapsTest {
 
     @Test
     void handleBetThrowsOnNegativeBet() {
-        assertThrows(IllegalArgumentException.class, () -> craps.handleBet(-50));
+        assertThrows(IllegalArgumentException.class, () -> craps.handleBet(-TEST_BET_AMOUNT));
     }
 
     @Test
     void updateBalanceIncreasesBalanceOnWin() {
-        craps.updateBalance(100);
-        assertEquals(1100, Casino.balance);
+        craps.updateBalance(TEST_BET_AMOUNT);
+        assertEquals(STARTING_BALANCE + TEST_BET_AMOUNT, Casino.balance);
     }
 
     @Test
     void updateBalanceDecreasesBalanceOnLoss() {
-        craps.updateBalance(-100);
-        assertEquals(900, Casino.balance);
+        craps.updateBalance(-TEST_BET_AMOUNT);
+        assertEquals(STARTING_BALANCE - TEST_BET_AMOUNT, Casino.balance);
     }
 
     @Test
@@ -65,9 +78,8 @@ public class CrapsTest {
     }
 
     @Test
-    void setStateTransitionsCorrectly() {
+    void setStateTransitionsToPointPhaseState() {
         craps.setState(new PointPhaseState());
-        craps.setPoint(6);
-        assertEquals(6, craps.getPoint());
+        assertInstanceOf(PointPhaseState.class, craps.getCurrentState());
     }
 }

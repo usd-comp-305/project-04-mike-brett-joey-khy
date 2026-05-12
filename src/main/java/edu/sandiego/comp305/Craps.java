@@ -9,6 +9,8 @@ public class Craps implements Game {
     private int point;
     private int betAmount;
     private final Random random = new Random();
+    private static final int DIE_FACE_COUNT = 6;
+    private static final int DIE_MINIMUM_VALUE = 1;
 
     public Craps() {
         this.currentState = new ComingOutState();
@@ -32,7 +34,7 @@ public class Craps implements Game {
     }
 
     public int rollDie() {
-        return random.nextInt(6) + 1;
+        return random.nextInt(DIE_FACE_COUNT) + DIE_MINIMUM_VALUE;
     }
 
     public int roll() {
