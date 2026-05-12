@@ -103,7 +103,15 @@ public class RouletteTest {
 
     @Test
     void testHandleBetWinOnNumber(){
+        int winningNumber = 5;
+        int userGuessesWinningNumber = 5;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(winningNumber);
+        when(mockScanner.nextInt()).thenReturn(userGuessesWinningNumber);
 
+        wheel.getUserWager();
+        wheel.spinWheel();
+
+        assertEquals(350, wheel.handleBet(10));
     }
 
     @Test
