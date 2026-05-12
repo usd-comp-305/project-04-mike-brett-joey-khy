@@ -39,6 +39,47 @@ class DeckOfCards {
   + {static} Card dealCard(ArrayList<Card> deck)
 }
 
+class Blackjack {
+  - int playerTotal
+  - int dealerTotal
+  - int betAmount
+  - ArrayList<Card> playerHand
+  - ArrayList<Card> dealerHand
+  - ArrayList<Card> splitHand
+  - Card dealerFaceUpCard
+  - ArrayList<Card> deck
+  - Scanner scanner
+  - boolean playerStands
+  - boolean hasSplit
+  - int splitTotal
+  - int HIT
+  - int STAND
+  - int DOUBLE
+  - int SPLIT
+
+  + Blackjack(Scanner scanner)
+  - void hit(ArrayList<Card> hand)
+  - void split()
+  - void doubleDown(ArrayList<Card> hand)
+  + int handleBet(int bet)
+  + void playGame()
+  + void updateBalance(int amountWonOrLost)
+  ~ void dealStartingHand()
+  ~ int calculateHandTotal(ArrayList<Card> hand)
+  ~ void playerDecisions(ArrayList<Card> hand, int handTotal)
+  ~ void dealerDecisions()
+  + ArrayList<Card> getPlayerHand()
+  + ArrayList<Card> getDealerHand()
+  + int getBetAmount()
+  + boolean getPlayerStand()
+  + ArrayList<Card> getSplitHand()
+  ~ void setDeck(ArrayList<Card> deck)
+  ~ void setPlayerTotal(int total)
+  ~ void setDealerTotal(int total)
+  ~ void setSplitTotal(int total)
+  ~ void setHasSplit(boolean hasSplit)
+}
+
 class Baccarat {
   - int playerTotal
   - int bankerTotal
@@ -180,6 +221,11 @@ enum SlotSymbols {
   DIAMOND
 }
 
+Game <|.. Blackjack
+Blackjack --> Card
+Blackjack ..> DeckOfCards
+GameFactory ..> Blackjack
+
 Game <|.. Baccarat
 Game <|.. Craps
 Game <|.. Slots
@@ -213,8 +259,6 @@ Slots --> SlotSymbols
 Roulette *-- RouletteWheel
 Roulette --> Color
 RouletteWheel o-- Color
-
-}
 
 
 @enduml
