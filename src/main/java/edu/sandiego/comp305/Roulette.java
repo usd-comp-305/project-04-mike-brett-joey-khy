@@ -30,6 +30,9 @@ public class Roulette implements Game{
             case 1: return lastSpinColor.equals(Color.RED) ? amount : -amount;
             case 2: return lastSpinColor.equals(Color.BLACK) ? amount : -amount;
             case 3: return lastSpinColor.equals(Color.GREEN) ? amount * singleOptionMultiplier : -amount;
+            case 4: return lastSpinNumber % evenOrOddFactor == 0 ? amount : -amount;
+            case 5: return lastSpinNumber % evenOrOddFactor != 0 ? amount : -amount;
+
             default: return 0;
         }
     }
