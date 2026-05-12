@@ -23,7 +23,7 @@ public class Blackjack implements Game {
 
     private void hit() {
         playerHand.add(DeckOfCards.dealCard(deck));
-        newPlayerTotal();
+        playerTotal = calculateHandTotal(playerHand);
     }
 
     private void split() {
@@ -37,7 +37,7 @@ public class Blackjack implements Game {
         betAmount *= 2;
         playerHand.add(DeckOfCards.dealCard(deck));
         playerStands = true;
-        newPlayerTotal();
+        playerTotal = calculateHandTotal(playerHand);
     }
 
     public int handleBet(int bet) {
@@ -57,11 +57,18 @@ public class Blackjack implements Game {
         betAmount = scanner.nextInt();
 
         dealStartingHand();
-        newPlayerTotal();
+        playerTotal = calculateHandTotal(playerHand);
 
 
         hasSplit = false;
         playerDecisions(hasSplit);
+
+        if(hasSplit){
+            System.out.println("You are now playing your split hand");
+
+
+        }
+
     }
 
     @Override
@@ -80,23 +87,22 @@ public class Blackjack implements Game {
 
     }
 
-    void newPlayerTotal(){
-        playerTotal = 0;
+    int calculateHandTotal(ArrayList<Card> hand) {
+        int total = 0;
         int numAces = 0;
-        for(Card card : playerHand){
+        for (Card card : hand) {
             int cardValue = card.cardValue.getCardValue();
-            if(cardValue == 1){
-                playerTotal += 10;
+            if (cardValue == 1) {
+                total += 10;
                 numAces++;
             }
-            playerTotal += cardValue;
+            total += cardValue;
         }
-        while(playerTotal > 21 && numAces > 0){
-            playerTotal -= 10;
+        while (total > 21 && numAces > 0) {
+            total -= 10;
             numAces--;
         }
-
-
+        return total;
     }
 
     void playerDecisions(boolean hasSplit){

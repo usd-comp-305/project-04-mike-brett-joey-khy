@@ -36,8 +36,8 @@ public class TestBlackjack {
         blackjack.getPlayerHand().add(card1);
         blackjack.getPlayerHand().add(card2);
 
-        blackjack.newPlayerTotal();
-        assertEquals(12, blackjack.getPlayerTotal());
+        int total = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        assertEquals(12, total);
     }
 
     @Test
@@ -46,8 +46,8 @@ public class TestBlackjack {
         Card card2 = new Card(Suit.SPADE, CardValues.TEN);
         blackjack.getPlayerHand().add(card1);
         blackjack.getPlayerHand().add(card2);
-        blackjack.newPlayerTotal();
-        assertEquals(21, blackjack.getPlayerTotal());
+        int total = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        assertEquals(21, total);
     }
 
     @Test
@@ -60,8 +60,8 @@ public class TestBlackjack {
         blackjack.getPlayerHand().add(card2);
         blackjack.getPlayerHand().add(card3);
 
-        blackjack.newPlayerTotal();
-        assertEquals(12, blackjack.getPlayerTotal());
+        int total = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        assertEquals(12, total);
     }
 
     @Test
@@ -125,13 +125,10 @@ public class TestBlackjack {
         Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.setDeck(riggedDeck);
         blackjack.dealStartingHand();
-        blackjack.newPlayerTotal();
         blackjack.hasSplit = false;
         blackjack.playerDecisions(blackjack.hasSplit);
         assertFalse(blackjack.getSplitHand().isEmpty());
     }
-
-
 
 
 
