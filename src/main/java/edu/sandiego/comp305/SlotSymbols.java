@@ -9,5 +9,4 @@ public enum SlotSymbols {
     SEVEN,
     GOLD_BAR,
     DIAMOND,
-
 }
