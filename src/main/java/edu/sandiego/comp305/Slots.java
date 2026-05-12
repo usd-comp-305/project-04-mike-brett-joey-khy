@@ -76,7 +76,7 @@ public class Slots implements Game{
             System.out.print("Please enter your bet amount (0 to exit the game) : ");
             int bet = scanner.nextInt();
             if (bet == 0){
-                System.out.println("Exiting Baccarat");
+                System.out.println("Exiting Slots");
                 return;
             }
             if (bet < 0) {
