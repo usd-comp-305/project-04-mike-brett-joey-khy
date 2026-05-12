@@ -130,11 +130,6 @@ public class RouletteTest {
     }
 
     @Test
-    void testPlayGame() {
-
-    }
-
-    @Test
     void testSpinWheelFirstRed() {
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(1);
         assertEquals(Color.RED, wheel.spinWheel());

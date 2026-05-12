@@ -38,8 +38,32 @@ public class Roulette implements Game{
     }
 
    @Override
-    public int playGame() {
-        return 0;
+   public void playGame() {
+        boolean continuePlaying = true;
+        System.out.println("Welcome to Roulette!");
+        while (continuePlaying){
+            System.out.println("How much would you like to bet? (Enter 0 to stop playing) ");
+            int amountToWager = scanner.nextInt();
+            if (amountToWager == 0){
+                continuePlaying = false;
+                continue;
+            }
+            if (amountToWager > Casino.balance){
+                System.out.println("Invalid wager: You can't bet more than your balance.");
+                continue;
+            }
+
+            System.out.println("User wagered $" + amountToWager);
+            getUserWager();
+
+            System.out.println("Spinning wheel...");
+            spinWheel();
+            System.out.println("The winning square is... " + lastSpinNumber + " " + lastSpinColor);
+            int changeBalance = handleBet(amountToWager);
+
+            updateBalance(changeBalance);
+            System.out.println("Balance: " + Casino.balance);
+        }
     }
 
     @Override
