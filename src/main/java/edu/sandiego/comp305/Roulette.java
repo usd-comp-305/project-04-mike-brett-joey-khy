@@ -89,11 +89,14 @@ public class Roulette implements Game{
         System.out.println("6 for a specific number");
 
         userWagerChoice = scanner.nextInt();
+        if (userWagerChoice <= 0 || userWagerChoice > 6){
+            System.out.println("Invalid: Answer must be between 1-6. Enter a valid wager.");
+            return getUserWager();
+        }
 
         if (userWagerChoice == 6){
             System.out.println("Enter the number you would like to bet on: ");
             userNumberChoice = scanner.nextInt();
-            return userWagerChoice;
         }
         return userWagerChoice;
     }
