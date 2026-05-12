@@ -16,6 +16,12 @@ public class Blackjack implements Game {
     private boolean hasSplit;
     private int splitTotal;
 
+    private final int HIT = 1;
+    private final int STAND = 2;
+    private final int DOUBLE = 3;
+    private final int SPLIT = 4;
+
+
 
     public Blackjack(Scanner scanner){
         this.scanner = scanner;
@@ -46,7 +52,7 @@ public class Blackjack implements Game {
     public void playGame() {
         deck = DeckOfCards.createDeckOfCards();
         DeckOfCards.shuffleDeck(deck);
-        System.out.println("Welcome to Blackjack!!! Below are the table specific rules:\n " +
+        System.out.println("Welcome to Blackjack!!! Below are the table specific rules:\n" +
                 "1. Dealer stands on soft 17. \n" +
                 "2. You can only split once per deal. \n" +
                 "3. Blackjack pays out 3:2 \n" +
@@ -112,25 +118,25 @@ public class Blackjack implements Game {
     }
 
     void playerDecisions(ArrayList<Card> hand, int handTotal){
-        System.out.println("You have a " + handTotal + "with a" + hand.getFirst().cardValue + "and a " +
-                hand.getLast().getFaceValue() + "The dealer is showing a " + dealerFaceUpCard.getFaceValue() +
-                "what would you like to do?");
+        System.out.println("You have a " + handTotal + " with a" + hand.getFirst().cardValue + " and a " +
+                hand.getLast().getFaceValue() + " The dealer is showing a " + dealerFaceUpCard.getFaceValue() +
+                " what would you like to do?");
 
 
         while(handTotal < 21 && !playerStands){
             int userDecision = scanner.nextInt();
-            if(userDecision == 1){
+            if(userDecision == HIT){
                 hit(hand);
                 handTotal = calculateHandTotal(hand);
             }
-            else if(userDecision == 2){
+            else if(userDecision == STAND){
                 playerStands = true;
             }
-            else if(userDecision == 3 && hand.size() == 2){
+            else if(userDecision == DOUBLE && hand.size() == 2){
                 doubleDown(hand);
                 handTotal = calculateHandTotal(hand);
             }
-            else if(userDecision == 4){
+            else if(userDecision == SPLIT){
                 if(hand.getFirst().getFaceValue() == hand.getLast().getFaceValue() && !hasSplit){
                     hasSplit = true;
                     split();
@@ -141,7 +147,7 @@ public class Blackjack implements Game {
                 }
             }
             else{
-                System.out.println("Invalid input, Enter 1 to hit, 2 to stand, 3 to double, and 4 to split\"");
+                System.out.println("Invalid input, Enter 1 to hit, 2 to stand, 3 to double, and 4 to split");
             }
         }
 

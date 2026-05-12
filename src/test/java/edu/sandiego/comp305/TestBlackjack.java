@@ -9,6 +9,12 @@ import static org.mockito.Mockito.*;
 
 public class TestBlackjack {
 
+    final int HIT = 1;
+    final int STAND = 2;
+    final int DOUBLE = 3;
+    final int SPLIT = 4;
+    final int BET_SIZE = 10;
+
     Blackjack blackjack;
 
     @BeforeEach
@@ -67,7 +73,7 @@ public class TestBlackjack {
     @Test
     void testHitAddsCardToHand(){
         Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(10).thenReturn(1).thenReturn(2);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(HIT).thenReturn(STAND);
 
         Blackjack blackjack = new Blackjack(mockScanner);
 
@@ -78,7 +84,7 @@ public class TestBlackjack {
     @Test
     void testDoubleDownAddsCardToHand(){
         Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(10).thenReturn(3).thenReturn(2);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(DOUBLE).thenReturn(STAND);
 
         Blackjack blackjack = new Blackjack(mockScanner);
 
@@ -89,7 +95,7 @@ public class TestBlackjack {
     @Test
     void testDoubleDownDoublesBet(){
         Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(10).thenReturn(3).thenReturn(2);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(DOUBLE);
 
         Blackjack blackjack = new Blackjack(mockScanner);
 
@@ -100,7 +106,7 @@ public class TestBlackjack {
     @Test
     void testDoubleDownCantHit(){
         Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(10).thenReturn(3).thenReturn(2);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(DOUBLE).thenReturn(HIT);
 
         Blackjack blackjack = new Blackjack(mockScanner);
 
@@ -120,7 +126,7 @@ public class TestBlackjack {
         riggedDeck.add(new Card(Suit.HEART, CardValues.SIX));
 
         Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(4).thenReturn(2).thenReturn(2);
+        when(mockScanner.nextInt()).thenReturn(SPLIT).thenReturn(STAND).thenReturn(STAND);
 
         Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.setDeck(riggedDeck);
@@ -141,7 +147,7 @@ public class TestBlackjack {
         riggedDeck.add(new Card(Suit.HEART, CardValues.FIVE));
 
         Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt(10)).thenReturn(4).thenReturn(2);
+        when(mockScanner.nextInt()).thenReturn(SPLIT).thenReturn(STAND);
 
         Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.setDeck(riggedDeck);
@@ -150,6 +156,30 @@ public class TestBlackjack {
         blackjack.playerDecisions(blackjack.getPlayerHand(), playerTotal);
 
         assertTrue(blackjack.getSplitHand().isEmpty());
+    }
+
+    @Test
+    void cantSplitTwice(){
+        ArrayList<Card> riggedDeck = new ArrayList<>();
+        riggedDeck.add(new Card(Suit.HEART, CardValues.EIGHT));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.TEN));
+        riggedDeck.add(new Card(Suit.DIAMOND, CardValues.EIGHT));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.SEVEN));
+        riggedDeck.add(new Card(Suit.CLUB, CardValues.EIGHT));
+        riggedDeck.add(new Card(Suit.SPADE, CardValues.EIGHT));
+
+        Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(SPLIT).thenReturn(SPLIT).thenReturn(STAND).thenReturn(STAND);
+
+        Blackjack blackjack = new Blackjack(mockScanner);
+        blackjack.setDeck(riggedDeck);
+        blackjack.dealStartingHand();
+        int playerTotal = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        blackjack.playerDecisions(blackjack.getPlayerHand(), playerTotal);
+
+
+        assertEquals(2, blackjack.getPlayerHand().size());
+        assertEquals(2, blackjack.getSplitHand().size());
     }
 
 
