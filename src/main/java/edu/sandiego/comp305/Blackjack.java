@@ -66,7 +66,11 @@ public class Blackjack implements Game {
     void newPlayerTotal(){
         playerTotal = 0;
         for(Card card : playerHand){
-            playerTotal += card.cardValue.getCardValue();
+            int cardValue = card.cardValue.getCardValue();
+            if(cardValue == 1){
+                playerTotal =+ 10;
+            }
+            playerTotal += cardValue;
         }
     }
 
