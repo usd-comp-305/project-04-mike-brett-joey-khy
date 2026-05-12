@@ -74,4 +74,37 @@ public class TestBlackjack {
         blackjack.playGame();
         assertEquals(3, blackjack.getPlayerHand().size());
     }
+
+    @Test
+    void testDoubleDownAddsCardToHand(){
+        Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(10).thenReturn(3).thenReturn(2);
+
+        Blackjack blackjack = new Blackjack(mockScanner);
+
+        blackjack.playGame();
+        assertEquals(3, blackjack.getPlayerHand().size());
+    }
+
+    @Test
+    void testDoubleDownDoublesBet(){
+        Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(10).thenReturn(3).thenReturn(2);
+
+        Blackjack blackjack = new Blackjack(mockScanner);
+
+        blackjack.playGame();
+        assertEquals(20, blackjack.getBetAmount());
+    }
+
+    @Test
+    void testDoubleDownCantHit(){
+        Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(10).thenReturn(3).thenReturn(2);
+
+        Blackjack blackjack = new Blackjack(mockScanner);
+
+        blackjack.playGame();
+        assert(blackjack.getPlayerStand());
+    }
 }

@@ -26,9 +26,14 @@ public class Blackjack implements Game {
     }
 
     private void split() {
+
     }
 
     private void doubleDown() {
+        betAmount *= 2;
+        playerHand.add(DeckOfCards.dealCard(deck));
+        playerStands = true;
+        newPlayerTotal();
     }
 
     public int handleBet(int bet) {
@@ -133,5 +138,11 @@ public class Blackjack implements Game {
 
     public int getPlayerTotal(){
         return playerTotal;
+    }
+    public int getBetAmount(){
+        return betAmount;
+    }
+    public boolean getPlayerStand(){
+        return playerStands;
     }
 }
