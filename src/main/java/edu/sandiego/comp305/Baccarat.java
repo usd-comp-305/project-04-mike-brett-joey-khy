@@ -108,14 +108,12 @@ public class Baccarat implements Game{
 
     public static int getCardValue(Card card){
         String facevalue = card.getFaceValue();
-        switch (facevalue){
-            case "A":
-                return 1;
-            case "K": case "Q": case "J": case "10":
-                return 0;
-            default:
-                return Integer.parseInt(facevalue);
+        if (facevalue.equals("A")) {
+            return 1;
+        } else if (facevalue.equals("K") || facevalue.equals("Q") || facevalue.equals("J") || facevalue.equals("10")) {
+            return 0;
         }
+        return Integer.parseInt(facevalue);
     }
 
     public boolean isNatural(){
@@ -149,7 +147,7 @@ public class Baccarat implements Game{
     }
 
     @Override
-    public int playGame(){
+    public void playGame(){
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         System.out.println("Welcome to Baccarat. Enter who you would like to be on (player/banker/tie): ");
         betOn = scanner.next().toLowerCase();
@@ -182,11 +180,11 @@ public class Baccarat implements Game{
         System.out.println("You bet on: " + betOn);
         int netWin = handleBet(bet);
         updateBalance(netWin);
-        return netWin;
     }
 
     @Override
     public void updateBalance(int amount){
+        Casino.balance += amount;
         if (amount > 0) {
             System.out.println("Game result: +" + amount);
         } else {
