@@ -1,16 +1,65 @@
 package edu.sandiego.comp305;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Scanner;
+
 public class Casino {
 
-    public int balance;
+    public static int balance = 1000;
+    public static String playerName;
+    private static Scanner scanner = new Scanner(System.in);
 
-    public void runCasino() {
-
+    public static void main(String[] args) {
+        greetPlayer();
+        while (isOpen()) {
+            printMenu();
+            int choice = promptChoice();
+            if (choice == 0) {
+                break;
+            }
+            runGame(choice);
+        }
+        exitCasino();
     }
 
-    public int getBalance() {
-        return balance;
+    private static void greetPlayer() {
+        System.out.println("Welcome to USD Casino!");
+        System.out.print("Enter your name: ");
+        playerName = scanner.nextLine();
+        System.out.println("\nHello, " + playerName + "! You're starting with $" + balance + ".\n");
+    }
+
+    private static int promptChoice() {
+        System.out.print("Choose a game: ");
+        return scanner.nextInt();
+    }
+
+    public static void runGame(int choice) {
+        Game selectedGame = GameFactory.getGame(choice);
+        if (selectedGame == null) {
+            System.out.println("Invalid choice. Please try again.");
+            return;
+        }
+        selectedGame.playGame();
+    }
+
+    public static boolean isOpen() {
+        return balance > 0;
+    }
+
+    public static void exitCasino() {
+        System.out.println("\nGoodbye, " + playerName + "! You're leaving with $" + balance + ".");
+        scanner.close();
+    }
+
+    private static void printMenu() {
+        System.out.println("\n--- USD Casino ---");
+        System.out.println("Balance: $" + balance);
+        System.out.println("1. Slots");
+        System.out.println("2. Craps");
+        System.out.println("3. Blackjack");
+        System.out.println("4. Baccarat");
+        System.out.println("5. Roulette");
+        System.out.println("0. Exit");
+        System.out.println("------------------");
     }
 }
