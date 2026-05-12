@@ -24,7 +24,7 @@ public class RouletteTest {
     }
 
     @Test
-    void testHandleBet(){
+    void testHandleBetWinOnRed(){
         int redSpaceOnWheel = 1;
         int userGuessesRed = 1;
         when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(redSpaceOnWheel);
@@ -34,6 +34,49 @@ public class RouletteTest {
         wheel.spinWheel();
 
         assertEquals(10, wheel.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetLoseOnRed() {
+        int redSpaceOnWheel = 1;
+        int userGuessesBlack = 2;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(redSpaceOnWheel);
+        when(mockScanner.nextInt()).thenReturn(userGuessesBlack);
+
+        wheel.getUserWager();
+        wheel.spinWheel();
+
+        assertEquals(-10, wheel.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetWinOnGreen(){
+
+    }
+
+    @Test
+    void testHandleBetLoseOnGreen(){
+
+    }
+
+    @Test
+    void testHandleBetWinOnEven(){
+
+    }
+
+    @Test
+    void testHandleBetLoseOnEven(){
+
+    }
+
+    @Test
+    void testHandleBetWinOnNumber(){
+
+    }
+
+    @Test
+    void testHandleBetLoseOnNumber(){
+
     }
 
     @Test
