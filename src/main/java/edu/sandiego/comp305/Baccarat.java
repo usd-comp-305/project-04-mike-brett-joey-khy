@@ -150,9 +150,13 @@ public class Baccarat implements Game{
     public void playGame(){
         System.out.println("Welcome to Baccarat. Enter who you would like to bet on (player/banker/tie): ");
         betOn = scanner.next().toLowerCase();
-        System.out.println("Enter your bet amount: ");
+        System.out.println("Enter your bet amount (0 to exit the game) : ");
         int bet = scanner.nextInt();
-        if (bet <= 0){
+        if (bet == 0){
+            System.out.println("Exiting Baccarat");
+            return;
+        }
+        if (bet < 0){
             throw new IllegalArgumentException("Bet amount must be at least $1");
         }
         dealInitialCards();
