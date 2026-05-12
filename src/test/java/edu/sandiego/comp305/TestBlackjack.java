@@ -63,4 +63,15 @@ public class TestBlackjack {
         blackjack.newPlayerTotal();
         assertEquals(12, blackjack.getPlayerTotal());
     }
+
+    @Test
+    void testHitAddsCardToHand(){
+        Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(10).thenReturn(1).thenReturn(2);
+
+        Blackjack blackjack = new Blackjack(mockScanner);
+
+        blackjack.playGame();
+        assertEquals(3, blackjack.getPlayerHand().size());
+    }
 }
