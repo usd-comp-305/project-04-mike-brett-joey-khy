@@ -16,7 +16,7 @@ public class Roulette implements Game{
     private final int EVEN_OR_ODD_FACTOR = 2;
     private Color lastSpinColor;
 
-    public Roulette(Random rng, Scanner scanner){
+    public Roulette(Scanner scanner, Random rng){
         this.rng = rng;
         this.scanner = scanner;
         wheel = new RouletteWheel();
@@ -102,14 +102,4 @@ public class Roulette implements Game{
         }
         return WagerType;
     }
-
-
-    @Override
-    public int handleBet(int amount) { return 0; }
-
-    @Override
-    public void playGame() {}
-
-    @Override
-    public void updateBalance(int amount) {}
 }

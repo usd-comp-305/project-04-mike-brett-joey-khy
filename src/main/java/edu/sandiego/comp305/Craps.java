@@ -8,11 +8,14 @@ public class Craps implements Game {
     private CrapsState currentState;
     private int point;
     private int betAmount;
-    private final Random random = new Random();
+    private Scanner scanner;
+    private Random random;
     private static final int DIE_FACE_COUNT = 6;
     private static final int DIE_MINIMUM_VALUE = 1;
 
-    public Craps() {
+    public Craps(Scanner scanner, Random random) {
+        this.scanner = scanner;
+        this.random = random;
         this.currentState = new ComingOutState();
         this.point = 0;
     }
@@ -77,7 +80,6 @@ public class Craps implements Game {
 
     @Override
     public void playGame() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("\nWelcome to Craps!");
 
         boolean keepPlaying = true;
