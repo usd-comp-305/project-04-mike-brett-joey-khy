@@ -44,7 +44,7 @@ public class Roulette implements Game{
 
     @Override
     public void updateBalance(int amount) {
-
+        Casino.balance += amount;
     }
 
     public Color spinWheel() {
