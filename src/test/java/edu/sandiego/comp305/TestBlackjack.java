@@ -125,9 +125,31 @@ public class TestBlackjack {
         Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.setDeck(riggedDeck);
         blackjack.dealStartingHand();
-        blackjack.hasSplit = false;
-        blackjack.playerDecisions(blackjack.hasSplit);
+
+        int playerTotal = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        blackjack.playerDecisions(blackjack.getPlayerHand(), playerTotal);
         assertFalse(blackjack.getSplitHand().isEmpty());
+    }
+
+    @Test
+    void cantSplitDifferentCards(){
+        ArrayList<Card> riggedDeck = new ArrayList<>();
+
+        riggedDeck.add(new Card(Suit.HEART, CardValues.EIGHT));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.TEN));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.SEVEN));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.FIVE));
+
+        Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt(10)).thenReturn(4).thenReturn(2);
+
+        Blackjack blackjack = new Blackjack(mockScanner);
+        blackjack.setDeck(riggedDeck);
+        blackjack.dealStartingHand();
+        int playerTotal = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        blackjack.playerDecisions(blackjack.getPlayerHand(), playerTotal);
+
+        assertTrue(blackjack.getSplitHand().isEmpty());
     }
 
 

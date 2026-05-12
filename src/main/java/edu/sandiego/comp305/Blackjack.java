@@ -6,14 +6,15 @@ public class Blackjack implements Game {
     private int playerTotal;
     private int dealerTotal;
     private int betAmount;
-    private ArrayList<Card> playerHand = new ArrayList<>();;
-    private ArrayList<Card> dealerHand = new ArrayList<>();;
+    private ArrayList<Card> playerHand = new ArrayList<>();
+    private ArrayList<Card> dealerHand = new ArrayList<>();
     private ArrayList<Card> splitHand = new ArrayList<>();
     private Card dealerFaceUpCard;
     private ArrayList<Card> deck;
     private Scanner scanner;
     private boolean playerStands;
-    boolean hasSplit;
+    private boolean hasSplit;
+    private int splitTotal;
 
 
     public Blackjack(Scanner scanner){
@@ -21,23 +22,21 @@ public class Blackjack implements Game {
     }
 
 
-    private void hit() {
-        playerHand.add(DeckOfCards.dealCard(deck));
-        playerTotal = calculateHandTotal(playerHand);
+    private void hit(ArrayList<Card> hand) {
+        hand.add(DeckOfCards.dealCard(deck));
     }
 
     private void split() {
-        splitHand.add(playerHand.removeLast());
-        hit();
-
-
+        splitHand.add(playerHand.getLast());
+        playerHand.removeLast();
+        hit(playerHand);
+        hit(splitHand);
     }
 
-    private void doubleDown() {
+    private void doubleDown(ArrayList<Card> hand) {
         betAmount *= 2;
-        playerHand.add(DeckOfCards.dealCard(deck));
+        hand.add(DeckOfCards.dealCard(deck));
         playerStands = true;
-        playerTotal = calculateHandTotal(playerHand);
     }
 
     public int handleBet(int bet) {
@@ -61,13 +60,20 @@ public class Blackjack implements Game {
 
 
         hasSplit = false;
-        playerDecisions(hasSplit);
+        playerDecisions(playerHand, playerTotal);
+        playerTotal = calculateHandTotal(playerHand);
 
         if(hasSplit){
             System.out.println("You are now playing your split hand");
-
-
+            playerStands = false;
+            splitTotal = calculateHandTotal(splitHand);
+            playerDecisions(splitHand, splitTotal);
         }
+        splitTotal = calculateHandTotal(splitHand);
+
+
+
+
 
     }
 
@@ -105,27 +111,30 @@ public class Blackjack implements Game {
         return total;
     }
 
-    void playerDecisions(boolean hasSplit){
-        System.out.println("You have a " + playerTotal + "with a" + playerHand.getFirst().cardValue + "and a " +
-                playerHand.getLast().getFaceValue() + "The dealer is showing a " + dealerFaceUpCard.getFaceValue() +
+    void playerDecisions(ArrayList<Card> hand, int handTotal){
+        System.out.println("You have a " + handTotal + "with a" + hand.getFirst().cardValue + "and a " +
+                hand.getLast().getFaceValue() + "The dealer is showing a " + dealerFaceUpCard.getFaceValue() +
                 "what would you like to do?");
 
 
-        while(playerTotal < 21 && !playerStands){
+        while(handTotal < 21 && !playerStands){
             int userDecision = scanner.nextInt();
             if(userDecision == 1){
-                hit();
+                hit(hand);
+                handTotal = calculateHandTotal(hand);
             }
             else if(userDecision == 2){
                 playerStands = true;
             }
-            else if(userDecision == 3){
-                doubleDown();
+            else if(userDecision == 3 && hand.size() == 2){
+                doubleDown(hand);
+                handTotal = calculateHandTotal(hand);
             }
             else if(userDecision == 4){
-                if(playerHand.getFirst().getFaceValue() == playerHand.getLast().getFaceValue() && !hasSplit){
+                if(hand.getFirst().getFaceValue() == hand.getLast().getFaceValue() && !hasSplit){
                     hasSplit = true;
                     split();
+                    handTotal = calculateHandTotal(hand);
                 }
                 else{
                     System.out.println("Cards must be the same to split, try again");
@@ -145,11 +154,6 @@ public class Blackjack implements Game {
     public ArrayList<Card> getDealerHand() {
         return dealerHand;
     }
-
-    public int getPlayerTotal(){
-        return playerTotal;
-    }
-
     public int getBetAmount(){
         return betAmount;
     }
