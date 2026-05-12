@@ -96,51 +96,70 @@ public class Blackjack implements Game {
 
 
     public void playGame() {
-        deck = DeckOfCards.createDeckOfCards();
-        DeckOfCards.shuffleDeck(deck);
-        System.out.println("Welcome to Blackjack!!! Below are the table specific rules:\n" +
+        System.out.print("Welcome to Blackjack!!! Below are the table specific rules:\n" +
                 "1. Dealer stands on soft 17. \n" +
                 "2. You can only split once per deal. \n" +
                 "3. Blackjack pays out 3:2 \n" +
-                "4. No doubling down on a split" +
-                "5. Enter 1 to hit, 2 to stand, 3 to double, and 4 to split" +
-                "How much would you like to bet:");
+                "4. No doubling down on a split \n" +
+                "5. Enter 1 to hit, 2 to stand, 3 to double, and 4 to split \n" +
+                "6. Enter 0 to leave blackjack \n");
+
+        while(true) {
+            System.out.print("How much would you like to bet: ");
+            betAmount = scanner.nextInt();
 
 
-        betAmount = scanner.nextInt();
-        if(betAmount < 1){
-            throw new IllegalArgumentException("Bet amount must be at least $1");
-        }
+            if (betAmount == 0) {
+                System.out.println("Thanks for playing! Your final balance is " + Casino.balance);
+                return;
+            }
+            if (betAmount < 0) {
+                throw new IllegalArgumentException("Bet amount must be at least $1");
+            }
+
+            resetGameState();
+
+            deck = DeckOfCards.createDeckOfCards();
+            DeckOfCards.shuffleDeck(deck);
+
+            dealStartingHand();
+            playerTotal = calculateHandTotal(playerHand);
 
 
-        dealStartingHand();
-        playerTotal = calculateHandTotal(playerHand);
+            hasSplit = false;
+            playerDecisions(playerHand, playerTotal);
+            playerTotal = calculateHandTotal(playerHand);
 
 
-
-
-        hasSplit = false;
-        playerDecisions(playerHand, playerTotal);
-        playerTotal = calculateHandTotal(playerHand);
-
-
-        if(hasSplit){
-            System.out.println("You are now playing your split hand");
-            playerStands = false;
+            if (hasSplit) {
+                System.out.println("You are now playing your split hand");
+                playerStands = false;
+                splitTotal = calculateHandTotal(splitHand);
+                playerDecisions(splitHand, splitTotal);
+            }
             splitTotal = calculateHandTotal(splitHand);
-            playerDecisions(splitHand, splitTotal);
+
+
+            dealerDecisions();
+
+
+            int result = handleBet(betAmount);
+            System.out.println("The result was " + result);
+            updateBalance(result);
+            System.out.println("Your new balance is " + Casino.balance);
+
         }
-        splitTotal = calculateHandTotal(splitHand);
 
-
-        dealerDecisions();
-
-
-        int result = handleBet(betAmount);
-        System.out.println("The result was " + result);
-        updateBalance(result);
-
-
+    }
+    private void resetGameState() {
+        playerHand.clear();
+        dealerHand.clear();
+        splitHand.clear();
+        playerStands = false;
+        hasSplit = false;
+        playerTotal = 0;
+        dealerTotal = 0;
+        splitTotal = 0;
     }
 
 
@@ -187,7 +206,7 @@ public class Blackjack implements Game {
 
 
     void playerDecisions(ArrayList<Card> hand, int handTotal){
-        System.out.println("You have a " + handTotal + " with a" + hand.getFirst().cardValue + " and a " +
+        System.out.println("You have a " + handTotal + " with a " + hand.getFirst().cardValue + " and a " +
                 hand.getLast().getFaceValue() + " The dealer is showing a " + dealerFaceUpCard.getFaceValue() +
                 " what would you like to do?");
 
@@ -229,7 +248,7 @@ public class Blackjack implements Game {
     void dealerDecisions(){
         dealerTotal = calculateHandTotal(dealerHand);
         System.out.println("Dealer shows a " + dealerHand.getLast().getFaceValue() +
-                " his new total is" + dealerTotal);
+                " his new total is " + dealerTotal);
 
 
         while(dealerTotal < 17){
