@@ -1,5 +1,7 @@
 package edu.sandiego.comp305;
 
+import java.util.Scanner;
+
 public class GameFactory {
     public static Game getGame(int choice) {
         switch (choice) {
