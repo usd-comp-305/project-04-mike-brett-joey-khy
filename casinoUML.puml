@@ -89,7 +89,7 @@ class Baccarat {
   - Card bankerThird
   - List<Card> playerHand
   - List<Card> bankerHand
-  + Baccarat()
+  + Baccarat(Scanner scanner)
   + void dealInitialCards()
   + void drawPlayerThirdCard()
   + void drawBankerThirdCard()
@@ -117,7 +117,7 @@ class Craps {
   - Random random
   - {static} int DIE_FACE_COUNT
   - {static} int DIE_MINIMUM_VALUE
-  + Craps()
+  + Craps(Scanner scanner, Random random)
   + CrapsState getCurrentState()
   + void setState(CrapsState state)
   + int getPoint()
@@ -145,6 +145,7 @@ class Slots {
   - Random rng
   - SlotSymbols[] symbols
   + SlotSymbols[] spin()
+  + void Slots(Scanner scanner, Random rng)
   + int calculatePayout(SlotSymbols[] result, int betAmount)
   + void printResult(SlotSymbols[] results)
   + int handleBet(int amount)
@@ -163,7 +164,7 @@ class Roulette {
   - int SINGLE_OPTION_MULTIPLIER
   - int EVEN_OR_ODD_FACTOR
   - Color lastSpinColor
-  + Roulette(Random rng, Scanner scanner)
+  + Roulette(Scanner scanner, Random rng)
   + int handleBet(int amount)
   + void playGame()
   + void updateBalance(int amount)
