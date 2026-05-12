@@ -9,50 +9,52 @@ public class BaccaratTest {
     private Baccarat baccarat;
 
     @BeforeEach
-    void setUp(){baccarat = new Baccarat();}
+    void setUp(){baccarat = new Baccarat();
+    Casino.balance = 1000;
+    }
 
 
 
     @Test
     void CardWorthZeroKingTest() {
-        Card king = new Card(Suit.SPADE, "K");
-        assertEquals(0, baccarat.getCardValue(king));
+        Card king = new Card(Suit.SPADE, CardValues.KING);
+        assertEquals(0, Baccarat.getCardValue(king));
     }
 
     @Test
     void CardWorthZeroQueenTest() {
-        Card queen = new Card(Suit.SPADE, "Q");
-        assertEquals(0, baccarat.getCardValue(queen));
+        Card queen = new Card(Suit.SPADE, CardValues.QUEEN);
+        assertEquals(0, Baccarat.getCardValue(queen));
     }
 
     @Test
     void CardWorthZeroJackTest() {
-        Card jack = new Card(Suit.SPADE, "J");
-        assertEquals(0, baccarat.getCardValue(jack));
+        Card jack = new Card(Suit.SPADE, CardValues.JACK);
+        assertEquals(0, Baccarat.getCardValue(jack));
     }
 
     @Test
     void CardWorthZeroTenTest() {
-        Card ten = new Card(Suit.SPADE, "10");
-        assertEquals(0, baccarat.getCardValue(ten));
+        Card ten = new Card(Suit.SPADE, CardValues.TEN);
+        assertEquals(0, Baccarat.getCardValue(ten));
     }
 
     @Test
     void AceWorthOneTest(){
-        Card ace = new Card(Suit.SPADE,"A");
-        assertEquals(1, baccarat.getCardValue(ace));
+        Card ace = new Card(Suit.SPADE, CardValues.ACE);
+        assertEquals(1, Baccarat.getCardValue(ace));
     }
 
     @Test
     void CardWorthNumberNineTest(){
-        Card nine = new Card(Suit.SPADE,"9");
-        assertEquals(9, baccarat.getCardValue(nine));
+        Card nine = new Card(Suit.SPADE, CardValues.NINE);
+        assertEquals(9, Baccarat.getCardValue(nine));
     }
 
     @Test
     void CardWorthNumberTwoTest(){
-        Card two = new Card(Suit.SPADE,"2");
-        assertEquals(2, baccarat.getCardValue(two));
+        Card two = new Card(Suit.SPADE, CardValues.TWO);
+        assertEquals(2, Baccarat.getCardValue(two));
     }
 
     @Test
@@ -118,27 +120,27 @@ public class BaccaratTest {
     void PlayerDoesNotDrawOnNaturalTest(){
         baccarat.setPlayerTotal(8);
         baccarat.setBankerTotal(2);
-        int totalBefore = baccarat.getPlayerTotal();
+        int sizeBefore = baccarat.getPlayerHand().size();
         baccarat.drawPlayerThirdCard();
-        assertEquals(totalBefore, baccarat.getPlayerTotal());
+        assertEquals(sizeBefore, baccarat.getPlayerHand().size());
     }
 
     @Test
     void PlayerDoesNotDrawOnSixTest(){
         baccarat.setPlayerTotal(6);
         baccarat.setBankerTotal(2);
-        int totalBefore = baccarat.getPlayerTotal();
+        int sizeBefore = baccarat.getPlayerHand().size();
         baccarat.drawPlayerThirdCard();
-        assertEquals(totalBefore, baccarat.getPlayerTotal());
+        assertEquals(sizeBefore, baccarat.getPlayerHand().size());
     }
 
     @Test
     void PlayerDoesNotDrawOnSevenTest(){
         baccarat.setPlayerTotal(7);
         baccarat.setBankerTotal(2);
-        int totalBefore = baccarat.getPlayerTotal();
+        int sizeBefore = baccarat.getPlayerHand().size();
         baccarat.drawPlayerThirdCard();
-        assertEquals(totalBefore, baccarat.getPlayerTotal());
+        assertEquals(sizeBefore, baccarat.getPlayerHand().size());
     }
 
     @Test
@@ -161,18 +163,18 @@ public class BaccaratTest {
     void BankerDoesNotDrawOnNaturalTest(){
         baccarat.setPlayerTotal(8);
         baccarat.setBankerTotal(2);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerDoesNotDrawOnSevenWhenPlayerStandTest(){
         baccarat.setPlayerTotal(6);
         baccarat.setBankerTotal(7);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
 
     @Test
@@ -180,9 +182,9 @@ public class BaccaratTest {
         baccarat.dealInitialCards();
         baccarat.setPlayerTotal(6);
         baccarat.setBankerTotal(5);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertNotEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore+1, baccarat.getBankerHand().size());
     }
 
     @Test
@@ -206,101 +208,101 @@ public class BaccaratTest {
     @Test
     void BankerAlwaysDrawOnTwoWhenPlayerDrawTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.SPADE, "5"));
+        baccarat.setPlayerThird(new Card(Suit.SPADE, CardValues.FIVE));
         baccarat.setBankerTotal(2);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertNotEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore+1, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithThreeDrawsWhenPlayerThirdIsNotEightTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "7"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SEVEN));
         baccarat.setBankerTotal(3);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertNotEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore+1, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithThreeStandsWhenPlayerThirdIsEightTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "8"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.EIGHT));
         baccarat.setBankerTotal(3);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithFourDrawsWhenPlayerThirdIsFiveTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "5"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.FIVE));
         baccarat.setBankerTotal(4);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertNotEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore+1, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithFourStandsWhenPlayerThirdIsNineTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "9"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.NINE));
         baccarat.setBankerTotal(4);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerTotal();
         baccarat.drawBankerThirdCard();
-        assertEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithFiveDrawsWhenPlayerThirdIsSixTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "6"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SIX));
         baccarat.setBankerTotal(5);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertNotEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore+1, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithFiveStandsWhenPlayerThirdIsThreeTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "3"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.THREE));
         baccarat.setBankerTotal(5);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithSixDrawsWhenPlayerThirdIsSevenTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "7"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SEVEN));
         baccarat.setBankerTotal(6);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertNotEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore+1, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithSixStandsWhenPlayerThirdIsFiveTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "5"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.FIVE));
         baccarat.setBankerTotal(6);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
 
     @Test
     void BankerWithSevenAlwaysStandsWhenPlayerDrewTest(){
         baccarat.dealInitialCards();
-        baccarat.setPlayerThird(new Card(Suit.HEART, "6"));
+        baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SIX));
         baccarat.setBankerTotal(7);
-        int totalBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
-        assertEquals(totalBefore, baccarat.getBankerTotal());
+        assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
 
     @Test
@@ -333,7 +335,7 @@ public class BaccaratTest {
     }
 
     @Test
-    void HandleBetReturnNegativeWhenBetOnMatchesWinnerTest(){
+    void HandleBetReturnNegativeWhenBetOnDoesNotMatchesWinnerTest(){
         baccarat.setBetOn("player");
         baccarat.setBankerTotal(8);
         baccarat.setPlayerTotal(2);
@@ -346,5 +348,19 @@ public class BaccaratTest {
         baccarat.setBankerTotal(8);
         baccarat.setPlayerTotal(8);
         assertEquals(800,baccarat.handleBet(100));
+    }
+
+    @Test
+    void UpdateBalanceIncreasesBalanceOnWinTest(){
+        Casino.balance = 1000;
+        baccarat.updateBalance(200);
+        assertEquals(1200, Casino.balance);
+    }
+
+    @Test
+    void UpdateBalanceDecreasesBalanceOnLossTest(){
+        Casino.balance = 1000;
+        baccarat.updateBalance(-200);
+        assertEquals(800, Casino.balance);
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 public class Baccarat implements Game{
     private int playerTotal;
     private int bankerTotal;
-    private DeckOfCards deck;
+    private ArrayList<Card> deck;
     private String betOn;
     private Card playerThird;
     private Card bankerThird;
@@ -14,8 +14,8 @@ public class Baccarat implements Game{
     private List<Card> bankerHand;
 
     public Baccarat(){
-        this.deck = new DeckOfCards();
-        this.deck.shuffle();
+        this.deck = DeckOfCards.createDeckOfCards();
+        this.deck = DeckOfCards.shuffleDeck(deck);
         this.playerTotal = 0;
         this.bankerTotal = 0;
         this.betOn = "";
@@ -26,10 +26,10 @@ public class Baccarat implements Game{
     }
 
     public void dealInitialCards(){
-        Card playerCard1 = deck.dealCard();
-        Card bankerCard1 = deck.dealCard();
-        Card playerCard2 = deck.dealCard();
-        Card bankerCard2 = deck.dealCard();
+        Card playerCard1 = DeckOfCards.dealCard(deck);
+        Card bankerCard1 = DeckOfCards.dealCard(deck);
+        Card playerCard2 = DeckOfCards.dealCard(deck);
+        Card bankerCard2 = DeckOfCards.dealCard(deck);
 
         playerHand.add(playerCard1);
         bankerHand.add(bankerCard1);
@@ -46,7 +46,7 @@ public class Baccarat implements Game{
             return;
         }
         if (playerTotal <= 5){
-            playerThird = deck.dealCard();
+            playerThird = DeckOfCards.dealCard(deck);
             playerHand.add(playerThird);
             playerTotal = (playerTotal + getCardValue(playerThird)) % 10;
         }
@@ -58,7 +58,7 @@ public class Baccarat implements Game{
         }
         if (playerThird == null) {
             if (bankerTotal <= 5 ) {
-                bankerThird = deck.dealCard();
+                bankerThird = DeckOfCards.dealCard(deck);
                 bankerHand.add(bankerThird);
                 bankerTotal = (bankerTotal + getCardValue(bankerThird)) % 10;
             }
@@ -89,7 +89,7 @@ public class Baccarat implements Game{
                     break;
             }
             if (bankerDraw){
-                bankerThird = deck.dealCard();
+                bankerThird = DeckOfCards.dealCard(deck);
                 bankerHand.add(bankerThird);
                 bankerTotal = (bankerTotal + getCardValue(bankerThird)) % 10;
             }
@@ -107,13 +107,13 @@ public class Baccarat implements Game{
     }
 
     public static int getCardValue(Card card){
-        String facevalue = card.getFaceValue();
-        if (facevalue.equals("A")) {
+        CardValues cardvalue = card.getFaceValue();
+        if (cardvalue == CardValues.ACE) {
             return 1;
-        } else if (facevalue.equals("K") || facevalue.equals("Q") || facevalue.equals("J") || facevalue.equals("10")) {
+        } else if (cardvalue.getCardValue() >= 10) {
             return 0;
         }
-        return Integer.parseInt(facevalue);
+        return cardvalue.getCardValue();
     }
 
     public boolean isNatural(){
@@ -136,7 +136,7 @@ public class Baccarat implements Game{
     }
 
     public void printHand(String option, List<Card> hand, int total){
-        System.out.print(option + " hand ;");
+        System.out.print(option + " hand :");
         for (int i = 0; i < hand.size(); i++){
             System.out.print(hand.get(i).getFaceValue() + " of " + hand.get(i).getSuit());
             if (i < hand.size() - 1){
@@ -149,12 +149,12 @@ public class Baccarat implements Game{
     @Override
     public void playGame(){
         java.util.Scanner scanner = new java.util.Scanner(System.in);
-        System.out.println("Welcome to Baccarat. Enter who you would like to be on (player/banker/tie): ");
+        System.out.println("Welcome to Baccarat. Enter who you would like to bet on (player/banker/tie): ");
         betOn = scanner.next().toLowerCase();
         System.out.println("Enter your bet amount: ");
         int bet = scanner.nextInt();
         dealInitialCards();
-        System.out.println("Intital Cards:");
+        System.out.println("Initial Cards:");
         printHand("Player", playerHand, playerTotal);
         printHand("Banker", bankerHand, bankerTotal);
         if (isNatural()){
@@ -162,7 +162,7 @@ public class Baccarat implements Game{
         } else {
             drawPlayerThirdCard();
             if (playerThird != null){
-                System.out.println("Player draws: " + playerThird.getSuit() + " of " + playerThird.getFaceValue());
+                System.out.println("Player draws: " + playerThird.getFaceValue() + " of " + playerThird.getSuit());
                 System.out.println("Player total: " + playerTotal);
             } else {
                 System.out.println("Player stands ");
@@ -170,7 +170,7 @@ public class Baccarat implements Game{
 
             drawBankerThirdCard();
             if (bankerThird != null){
-                System.out.println("Banker draws: " + bankerThird.getSuit() + " of " + bankerThird.getFaceValue());
+                System.out.println("Banker draws: " + bankerThird.getFaceValue() + " of " + bankerThird.getSuit());
                 System.out.println("Banker total: " + bankerTotal);
             } else {
                 System.out.println("Banker stands ");
