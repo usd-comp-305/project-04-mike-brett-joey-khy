@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SlotsTest {
 
-private Slots slots;
+    private Slots slots;
 
     @BeforeEach
-    void setUp(){slots = new Slots();
+    void setUp(){
+        slots = new Slots();
     }
 
     @Test
@@ -34,14 +35,15 @@ private Slots slots;
     @Test
     void SpinIsDifferentOverMultipleIterationsTest(){
         boolean difference = false;
-        SlotSymbols[] firtsSpin = slots.spin();
-        for (int i = 0; i < 10; i++){
+        int smallSample = 10;
+        SlotSymbols[] firstSpin = slots.spin();
+        for (int i = 0; i < smallSample; i++){
             SlotSymbols[] next = slots.spin();
             for (int j = 0; j < next.length; j++){
-            if (next[j] != firtsSpin[j]) {
-                difference = true;
-                break;
-            }
+                if (next[j] != firstSpin[j]) {
+                    difference = true;
+                    break;
+                }
             }
         }
         assertTrue(difference);
@@ -51,6 +53,12 @@ private Slots slots;
     void CalculateBetReturnsNegativeWithNoMatchTest(){
         SlotSymbols[] result = {SlotSymbols.DIAMOND,SlotSymbols.LEMON,SlotSymbols.DIAMOND,SlotSymbols.STRAWBERRY,SlotSymbols.BELL};
         assertEquals(-100, slots.calculatePayout(result,100));
+    }
+
+    @Test
+    void MatchingStrawberryReturns3xBetTest(){
+        SlotSymbols[] result = {SlotSymbols.STRAWBERRY,SlotSymbols.STRAWBERRY,SlotSymbols.STRAWBERRY,SlotSymbols.STRAWBERRY,SlotSymbols.STRAWBERRY};
+        assertEquals(200, slots.calculatePayout(result,100));
     }
 
     @Test
@@ -98,6 +106,6 @@ private Slots slots;
     @Test
     void HandleBetReturnsCorrectValueRange(){
         int result = slots.handleBet(100);
-        assertTrue(result>= -100 || result<=1200);
+        assertTrue(result>= -100 && result<=1200);
     }
 }
