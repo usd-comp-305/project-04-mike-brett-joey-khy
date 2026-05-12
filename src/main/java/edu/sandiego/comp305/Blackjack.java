@@ -97,8 +97,8 @@ public class Blackjack implements Game {
 
     public void playGame() {
         System.out.print("Welcome to Blackjack!!! Below are the table specific rules:\n" +
-                "1. Dealer stands on soft 17. \n" +
-                "2. You can only split once per deal. \n" +
+                "1. Dealer stands on soft 17 \n" +
+                "2. You can only split once per deal \n" +
                 "3. Blackjack pays out 3:2 \n" +
                 "4. No doubling down on a split \n" +
                 "5. Enter 1 to hit, 2 to stand, 3 to double, and 4 to split \n");
@@ -108,6 +108,9 @@ public class Blackjack implements Game {
 
             if (betAmount < 1) {
                 throw new IllegalArgumentException("Bet amount must be at least $1");
+            }
+            if (betAmount > Casino.balance){
+                throw new IllegalArgumentException("Can not bet more then balance");
             }
 
             deck = DeckOfCards.createDeckOfCards();
@@ -189,14 +192,10 @@ public class Blackjack implements Game {
 
 
     void playerDecisions(ArrayList<Card> hand, int handTotal){
-        System.out.println("You have a " + handTotal + " with a " + hand.getFirst().cardValue + " and a " +
-                hand.getLast().getFaceValue() + " The dealer is showing a " + dealerFaceUpCard.getFaceValue() +
-                " what would you like to do?");
-
-
-
-
         while(handTotal < 21 && !playerStands){
+            System.out.println("You have a " + handTotal + " with a " + hand.getFirst().cardValue + " and a " +
+                    hand.getLast().getFaceValue() + " The dealer is showing a " + dealerFaceUpCard.getFaceValue() +
+                    " what would you like to do?");
             int userDecision = scanner.nextInt();
             if(userDecision == HIT){
                 hit(hand);
