@@ -3,14 +3,18 @@ package edu.sandiego.comp305;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Scanner;
+import java.util.Random;
 
 public class SlotsTest {
 
     private Slots slots;
+    private Scanner scanner;
+    private Random rng;
 
     @BeforeEach
     void setUp(){
-        slots = new Slots();
+        slots = new Slots(scanner, rng);
     }
 
     @Test

@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Scanner;
+import java.util.Random;
+
 
 public class CrapsTest {
 
@@ -14,13 +17,15 @@ public class CrapsTest {
     private static final int MAXIMUM_ROLL_VALUE = 12;
     private static final int TEST_ITERATIONS = 100;
     private static final int TEST_BET_AMOUNT = 100;
+    private Scanner scanner;
+    private Random rng;
 
     private Craps craps;
 
     @BeforeEach
     void setUp() {
         Casino.balance = STARTING_BALANCE;
-        craps = new Craps();
+        craps = new Craps(scanner,rng);
     }
 
     @Test

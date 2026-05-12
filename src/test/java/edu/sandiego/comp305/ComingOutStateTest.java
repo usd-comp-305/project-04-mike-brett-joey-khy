@@ -4,16 +4,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Scanner;
+import java.util.Random;
 
 public class ComingOutStateTest {
 
     private ComingOutState state;
     private Craps craps;
+    private Scanner scanner;
+    private Random rng;
 
     @BeforeEach
     void setUp() {
         state = new ComingOutState();
-        craps = new Craps();
+        craps = new Craps(scanner, rng);
     }
 
     @Test

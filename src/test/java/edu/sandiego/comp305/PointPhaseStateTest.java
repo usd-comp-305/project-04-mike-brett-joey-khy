@@ -3,17 +3,22 @@ package edu.sandiego.comp305;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+import java.util.Scanner;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PointPhaseStateTest {
 
     private PointPhaseState state;
     private Craps craps;
+    private Scanner scanner;
+    private Random rng;
 
     @BeforeEach
     void setUp() {
         state = new PointPhaseState();
-        craps = new Craps();
+        craps = new Craps(scanner,rng);
         craps.setPoint(6);
         craps.setState(new PointPhaseState());
     }

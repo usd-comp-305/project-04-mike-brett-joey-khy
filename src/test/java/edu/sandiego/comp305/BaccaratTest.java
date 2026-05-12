@@ -4,12 +4,15 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.Scanner;
+
 public class BaccaratTest {
 
     private Baccarat baccarat;
+    private Scanner scanner;
 
     @BeforeEach
-    void setUp(){baccarat = new Baccarat();
+    void setUp(){baccarat = new Baccarat(scanner);
     Casino.balance = 1000;
     }
 

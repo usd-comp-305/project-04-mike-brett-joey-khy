@@ -22,7 +22,7 @@ public class RouletteTest {
     void createTestObjects(){
         mockRng = mock(Random.class);
         mockScanner = mock(Scanner.class);
-        roulette = new Roulette(mockRng, mockScanner);
+        roulette = new Roulette(mockScanner, mockRng);
     }
 
     @Test
