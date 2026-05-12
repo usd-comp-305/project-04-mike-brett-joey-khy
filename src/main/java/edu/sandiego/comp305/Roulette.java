@@ -23,10 +23,14 @@ public class Roulette implements Game{
 
     @Override
     public int handleBet(int amount) {
-        if (userWagerChoice == 1 && lastSpinColor.equals(Color.RED)) {
-            return amount;
+        int singleOptionMultiplier = 35;
+        int evenOrOddFactor = 2;
+
+        switch (userWagerChoice){
+            case 1: return lastSpinColor.equals(Color.RED) ? amount : -amount;
+            case 2: return lastSpinColor.equals(Color.BLACK) ? amount : -amount;
+            default: return 0;
         }
-        return 0;
     }
 
    @Override
