@@ -70,6 +70,12 @@ public class Roulette implements Game{
     @Override
     public void updateBalance(int amount) {
         Casino.balance += amount;
+        if (amount > 0){
+            System.out.println("Congrats! You won $" + amount);
+        }
+        if (amount < 0){
+            System.out.println("Sorry, you lost $" + amount);
+        }
         System.out.println("Balance: " + Casino.balance);
     }
 
