@@ -14,6 +14,8 @@ public class SlotsTest {
 
     @BeforeEach
     void setUp(){
+        scanner = new Scanner(System.in);
+        rng = new Random();
         slots = new Slots(scanner, rng);
     }
 

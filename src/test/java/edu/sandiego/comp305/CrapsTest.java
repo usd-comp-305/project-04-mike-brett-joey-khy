@@ -25,6 +25,8 @@ public class CrapsTest {
     @BeforeEach
     void setUp() {
         Casino.balance = STARTING_BALANCE;
+        scanner = new Scanner(System.in);
+        rng = new Random();
         craps = new Craps(scanner,rng);
     }
 

@@ -253,7 +253,7 @@ public class BaccaratTest {
         baccarat.dealInitialCards();
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.NINE));
         baccarat.setBankerTotal(4);
-        int sizeBefore = baccarat.getBankerTotal();
+        int sizeBefore = baccarat.getBankerHand().size();
         baccarat.drawBankerThirdCard();
         assertEquals(sizeBefore, baccarat.getBankerHand().size());
     }
