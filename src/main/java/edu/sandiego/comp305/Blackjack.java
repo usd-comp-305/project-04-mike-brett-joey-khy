@@ -77,6 +77,9 @@ public class Blackjack implements Game {
         }
         splitTotal = calculateHandTotal(splitHand);
 
+        dealerDecisions();
+
+
 
 
 
@@ -153,24 +156,27 @@ public class Blackjack implements Game {
 
     }
 
-    public ArrayList<Card> getPlayerHand(){
-        return playerHand;
+    void dealerDecisions(){
+        dealerTotal = calculateHandTotal(dealerHand);
+        System.out.println("Dealer shows a " + dealerHand.getLast().getFaceValue() +
+                          " his new total is" + dealerTotal);
+
+        while(dealerTotal < 17){
+            System.out.println("Dealer hits");
+            hit(dealerHand);
+            dealerTotal = calculateHandTotal(dealerHand);
+            System.out.println("Dealer now has a " + dealerTotal);
+
+        }
+        if(dealerTotal > 21){
+            System.out.println("Dealer busts with " + dealerTotal);
+        }
     }
 
-    public ArrayList<Card> getDealerHand() {
-        return dealerHand;
-    }
-    public int getBetAmount(){
-        return betAmount;
-    }
-
-    public boolean getPlayerStand(){
-        return playerStands;
-    }
-    public ArrayList<Card> getSplitHand(){
-        return splitHand;
-    }
-    void setDeck(ArrayList<Card> deck) {
-        this.deck = deck;
-    }
+    public ArrayList<Card> getPlayerHand(){return playerHand;}
+    public ArrayList<Card> getDealerHand() {return dealerHand;}
+    public int getBetAmount(){return betAmount;}
+    public boolean getPlayerStand(){return playerStands;}
+    public ArrayList<Card> getSplitHand(){return splitHand;}
+    void setDeck(ArrayList<Card> deck) {this.deck = deck;}
 }

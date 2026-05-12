@@ -182,6 +182,21 @@ public class TestBlackjack {
         assertEquals(2, blackjack.getSplitHand().size());
     }
 
+    @Test
+    void testDealerHitsBelow17(){
+        blackjack.setDeck(DeckOfCards.createDeckOfCards());
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.SIX));
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.SEVEN));
+
+        blackjack.dealerDecisions();
+
+        assertTrue(blackjack.getDealerHand().size() > 2);
+    }
+
+
+
+
+
 
 
 }
