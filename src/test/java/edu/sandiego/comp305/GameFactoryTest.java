@@ -37,6 +37,11 @@ public class GameFactoryTest {
     }
 
     @Test
+    void exitChoiceReturnsNull() {
+        assertNull(GameFactory.getGame(0));
+    }
+
+    @Test
     void allReturnedGamesImplementGameInterface() {
         for (int i = 1; i <= 5; i++) {
             assertInstanceOf(Game.class, GameFactory.getGame(i));

@@ -6,41 +6,47 @@ public class Casino {
 
     public static int balance = 1000;
     public static String playerName;
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        greetPlayer();
+        while (isOpen()) {
+            printMenu();
+            int choice = promptChoice();
+            if (choice == 0) {
+                break;
+            }
+            runGame(choice);
+        }
+        exitCasino();
+    }
 
+    private static void greetPlayer() {
         System.out.println("Welcome to USD Casino!");
         System.out.print("Enter your name: ");
         playerName = scanner.nextLine();
         System.out.println("\nHello, " + playerName + "! You're starting with $" + balance + ".\n");
+    }
 
-        boolean running = true;
-        while (running) {
-            printMenu();
-            System.out.print("Choose a game: ");
-            int choice = scanner.nextInt();
+    private static int promptChoice() {
+        System.out.print("Choose a game: ");
+        return scanner.nextInt();
+    }
 
-            if (choice == 0) {
-                running = false;
-                continue;
-            }
-
-            Game selectedGame = GameFactory.getGame(choice);
-
-            if (selectedGame == null) {
-                System.out.println("Invalid choice. Please try again.");
-                continue;
-            }
-
-            selectedGame.playGame();
-
-            if (balance <= 0) {
-                System.out.println("\nYou're out of money! Thanks for playing, " + playerName + ".");
-                running = false;
-            }
+    public static void runGame(int choice) {
+        Game selectedGame = GameFactory.getGame(choice);
+        if (selectedGame == null) {
+            System.out.println("Invalid choice. Please try again.");
+            return;
         }
+        selectedGame.playGame();
+    }
 
+    public static boolean isOpen() {
+        return balance > 0;
+    }
+
+    public static void exitCasino() {
         System.out.println("\nGoodbye, " + playerName + "! You're leaving with $" + balance + ".");
         scanner.close();
     }
