@@ -90,7 +90,15 @@ public class RouletteTest {
 
     @Test
     void testHandleBetLoseOnEven(){
+        int evenSpaceOnWheel = 2;
+        int userGuessesOdd = 5;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(evenSpaceOnWheel);
+        when(mockScanner.nextInt()).thenReturn(userGuessesOdd);
 
+        wheel.getUserWager();
+        wheel.spinWheel();
+
+        assertEquals(-10, wheel.handleBet(10));
     }
 
     @Test
