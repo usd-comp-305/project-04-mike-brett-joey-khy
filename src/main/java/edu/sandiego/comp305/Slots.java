@@ -4,10 +4,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Slots implements Game{
-
-
-    private final Random rng = new Random();
+    private final Scanner scanner;
+    private final Random rng;
     private final SlotSymbols[] symbols = SlotSymbols.values();
+
+    public Slots(Scanner scanner, Random rng){
+        this.scanner = scanner;
+        this.rng = rng;
+    }
 
     public SlotSymbols[] spin(){
         SlotSymbols[] spinResults = new SlotSymbols[5];
@@ -66,7 +70,6 @@ public class Slots implements Game{
 
     @Override
     public void playGame() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Slots");
         boolean playing = true;
         while (playing) {

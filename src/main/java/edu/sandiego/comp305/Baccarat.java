@@ -2,6 +2,7 @@ package edu.sandiego.comp305;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Baccarat implements Game{
     private int playerTotal;
@@ -12,8 +13,10 @@ public class Baccarat implements Game{
     private Card bankerThird;
     private List<Card> playerHand;
     private List<Card> bankerHand;
+    private Scanner scanner;
 
-    public Baccarat(){
+    public Baccarat(Scanner scanner){
+        this.scanner = scanner;
         this.deck = DeckOfCards.createDeckOfCards();
         this.deck = DeckOfCards.shuffleDeck(deck);
         this.playerTotal = 0;
@@ -145,7 +148,6 @@ public class Baccarat implements Game{
 
     @Override
     public void playGame(){
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
         System.out.println("Welcome to Baccarat. Enter who you would like to bet on (player/banker/tie): ");
         betOn = scanner.next().toLowerCase();
         System.out.println("Enter your bet amount: ");

@@ -102,14 +102,4 @@ public class Roulette implements Game{
         }
         return WagerType;
     }
-
-
-    @Override
-    public int handleBet(int amount) { return 0; }
-
-    @Override
-    public void playGame() {}
-
-    @Override
-    public void updateBalance(int amount) {}
 }
