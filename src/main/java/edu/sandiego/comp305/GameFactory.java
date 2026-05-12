@@ -1,7 +1,6 @@
 package edu.sandiego.comp305;
 
 public class GameFactory {
-
     public static Game getGame(int choice) {
         switch (choice) {
             case 1: return new Slots();

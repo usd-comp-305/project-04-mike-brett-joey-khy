@@ -5,25 +5,26 @@ import java.util.Scanner;
 
 public class Slots implements Game{
 
-    private final Random random = new Random();
+
+    private final Random rng = new Random();
     private final SlotSymbols[] symbols = SlotSymbols.values();
 
     public SlotSymbols[] spin(){
-        SlotSymbols[] results = new SlotSymbols[5];
-        for (int i = 0; i < results.length; i++){
-            results[i] = symbols[random.nextInt(symbols.length)];
+        SlotSymbols[] spinResults = new SlotSymbols[5];
+        for (int i = 0; i < spinResults.length; i++){
+            spinResults[i] = symbols[rng.nextInt(symbols.length)];
         }
-        return results;
+        return spinResults;
     }
 
     public int calculatePayout(SlotSymbols result[], int betAmount) {
-        SlotSymbols first = result[0];
+        SlotSymbols firstSymbol = result[0];
         for (int i = 0; i < result.length; i++) {
-            if (result[i] != first) {
+            if (result[i] != firstSymbol) {
                 return -betAmount;
             }
         }
-        switch (first) {
+        switch (firstSymbol) {
             case SEVEN:
                 return betAmount * 7;
             case BELL:
@@ -53,13 +54,11 @@ public class Slots implements Game{
                 System.out.print(" | ");
             }
         }
+        System.out.print("\n");
     }
 
     @Override
     public int handleBet(int amount){
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Bet amount must be at least $1");
-        }
         SlotSymbols[] result = spin();
         printResult(result);
         return calculatePayout(result, amount);
@@ -69,11 +68,29 @@ public class Slots implements Game{
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Slots");
-        System.out.print("Please enter your bet amount: ");
-        int bet = scanner.nextInt();
-        int netChange = handleBet(bet);
-        updateBalance(netChange);
+        boolean playing = true;
+        while (playing) {
+            System.out.print("Please enter your bet amount: ");
+            int bet = scanner.nextInt();
+            if (bet <= 0) {
+                System.out.println("Invalid Bet. Bet amount must be at least $1");
+                continue;
+            }
+            int netChange = handleBet(bet);
+            updateBalance(netChange);
+            System.out.println("Current Balance: $" + Casino.balance);
+            if (Casino.balance <= 0){
+                System.out.println("You are out of money");
+                break;
+            }
+            System.out.println("Play Again? (Yes/No): ");
+            String playAgain = scanner.next().toLowerCase();
+            if (!playAgain.equals("yes")){
+                playing = false;
+            }
+        }
     }
+
 
     @Override
     public void updateBalance(int amount){
