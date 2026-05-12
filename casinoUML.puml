@@ -1,0 +1,220 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+interface Game {
+  + int handleBet(int amount)
+  + void playGame()
+  + void updateBalance(int amountWonOrLost)
+}
+
+class Casino {
+  + {static} int balance
+  + {static} String playerName
+  - {static} Scanner scanner
+  + {static} void main(String[] args)
+  - {static} void greetPlayer()
+  - {static} int promptChoice()
+  + {static} void runGame(int choice)
+  + {static} boolean isOpen()
+  + {static} void exitCasino()
+  - {static} void printMenu()
+}
+
+class GameFactory {
+  + {static} Game getGame(int choice)
+}
+
+class Card {
+  ~ Suit suit
+  ~ CardValues cardValue
+  ~ Card(Suit suit, CardValues cardValue)
+  ~ Suit getSuit()
+  ~ CardValues getFaceValue()
+}
+
+class DeckOfCards {
+  + {static} ArrayList<Card> createDeckOfCards()
+  + {static} ArrayList<Card> shuffleDeck(ArrayList<Card> deck)
+  + {static} Card dealCard(ArrayList<Card> deck)
+}
+
+class Baccarat {
+  - int playerTotal
+  - int bankerTotal
+  - ArrayList<Card> deck
+  - String betOn
+  - Card playerThird
+  - Card bankerThird
+  - List<Card> playerHand
+  - List<Card> bankerHand
+  + Baccarat()
+  + void dealInitialCards()
+  + void drawPlayerThirdCard()
+  + void drawBankerThirdCard()
+  + String determineWinner()
+  + {static} int getCardValue(Card card)
+  + boolean isNatural()
+  + int handleBet(int amount)
+  + void printHand(String option, List<Card> hand, int total)
+  + void playGame()
+  + void updateBalance(int amount)
+  + int getPlayerTotal()
+  + int getBankerTotal()
+  + void setPlayerTotal(int playerTotal)
+  + void setBankerTotal(int bankerTotal)
+  + void setBetOn(String betOn)
+  + void setPlayerThird(Card card)
+  + List<Card> getPlayerHand()
+  + List<Card> getBankerHand()
+}
+
+class Craps {
+  - CrapsState currentState
+  - int point
+  - int betAmount
+  - Random random
+  - {static} int DIE_FACE_COUNT
+  - {static} int DIE_MINIMUM_VALUE
+  + Craps()
+  + CrapsState getCurrentState()
+  + void setState(CrapsState state)
+  + int getPoint()
+  + void setPoint(int point)
+  + int rollDie()
+  + int roll()
+  + int handleBet(int amount)
+  + void playGame()
+  + void updateBalance(int amount)
+}
+
+interface CrapsState {
+  + String handleRoll(int roll, Craps context)
+}
+
+class ComingOutState {
+  + String handleRoll(int roll, Craps context)
+}
+
+class PointPhaseState {
+  + String handleRoll(int roll, Craps context)
+}
+
+class Slots {
+  - Random rng
+  - SlotSymbols[] symbols
+  + SlotSymbols[] spin()
+  + int calculatePayout(SlotSymbols[] result, int betAmount)
+  + void printResult(SlotSymbols[] results)
+  + int handleBet(int amount)
+  + void playGame()
+  + void updateBalance(int amount)
+}
+
+class Roulette {
+  - RouletteWheel wheel
+  - {static} int MAX_SPACES_ON_WHEEL
+  - Random rng
+  - Scanner scanner
+  - int WagerType
+  - int specificNumberChoice
+  - int lastSpinNumber
+  - int SINGLE_OPTION_MULTIPLIER
+  - int EVEN_OR_ODD_FACTOR
+  - Color lastSpinColor
+  + Roulette(Random rng, Scanner scanner)
+  + int handleBet(int amount)
+  + void playGame()
+  + void updateBalance(int amount)
+  + Color spinWheel()
+  + int getUserWager()
+}
+
+class RouletteWheel {
+  - List<Color> wheel
+  - {static} int MAX_SPACES_ON_WHEEL
+  + RouletteWheel()
+  + List<Color> getWheel()
+  + void createWheel()
+}
+
+enum Suit {
+  CLUB
+  HEART
+  DIAMOND
+  SPADE
+}
+
+enum CardValues {
+  ACE
+  TWO
+  THREE
+  FOUR
+  FIVE
+  SIX
+  SEVEN
+  EIGHT
+  NINE
+  TEN
+  JACK
+  QUEEN
+  KING
+  - int value
+  + int getCardValue()
+}
+
+enum Color {
+  RED
+  BLACK
+  GREEN
+}
+
+enum SlotSymbols {
+  CHERRY
+  LEMON
+  GRAPE
+  STRAWBERRY
+  BELL
+  SEVEN
+  GOLD_BAR
+  DIAMOND
+}
+
+Game <|.. Baccarat
+Game <|.. Craps
+Game <|.. Slots
+Game <|.. Roulette
+
+CrapsState <|.. ComingOutState
+CrapsState <|.. PointPhaseState
+
+Casino ..> GameFactory
+Casino ..> Game
+
+GameFactory ..> Game
+GameFactory ..> Slots
+GameFactory ..> Craps
+GameFactory ..> Baccarat
+GameFactory ..> Roulette
+
+Baccarat --> Card
+Baccarat ..> DeckOfCards
+
+DeckOfCards ..> Card
+Card --> Suit
+Card --> CardValues
+
+Craps --> CrapsState
+Craps --> ComingOutState
+Craps ..> PointPhaseState
+
+Slots --> SlotSymbols
+
+Roulette *-- RouletteWheel
+Roulette --> Color
+RouletteWheel o-- Color
+
+}
+
+
+@enduml
