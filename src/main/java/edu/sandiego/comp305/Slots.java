@@ -73,9 +73,13 @@ public class Slots implements Game{
         System.out.println("Welcome to Slots");
         boolean playing = true;
         while (playing) {
-            System.out.print("Please enter your bet amount: ");
+            System.out.print("Please enter your bet amount (0 to exit the game) : ");
             int bet = scanner.nextInt();
-            if (bet <= 0) {
+            if (bet == 0){
+                System.out.println("Exiting Baccarat");
+                return;
+            }
+            if (bet < 0) {
                 System.out.println("Invalid Bet. Bet amount must be at least $1");
                 continue;
             }
