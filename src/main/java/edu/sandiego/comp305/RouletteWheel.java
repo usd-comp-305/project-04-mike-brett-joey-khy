@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RouletteWheel {
     private List<Color> wheel;
-    private static final int MAX_SPACES_IN_WHEEL = 37;
+    private static final int MAX_SPACES_ON_WHEEL = 37;
 
     public RouletteWheel(){
         wheel = new ArrayList<>();
@@ -18,7 +18,7 @@ public class RouletteWheel {
 
     public void createWheel(){
         wheel.add(Color.GREEN);
-        for(int i = 0; i < MAX_SPACES_IN_WHEEL/2; i++){
+        for(int i = 0; i < MAX_SPACES_ON_WHEEL/2; i++){
             wheel.add(Color.RED);
             wheel.add(Color.BLACK);
         }
