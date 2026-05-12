@@ -193,10 +193,37 @@ public class TestBlackjack {
         assertTrue(blackjack.getDealerHand().size() > 2);
     }
 
+    @Test
+    void testDealerStandsOnSoft17(){
+        blackjack.setDeck(DeckOfCards.createDeckOfCards());
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.SIX));
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.ACE));
 
+        blackjack.dealerDecisions();
 
+        assertTrue(blackjack.getDealerHand().size() == 2);
+    }
 
+    @Test
+    void testDealerStandsAbove17(){
+        blackjack.setDeck(DeckOfCards.createDeckOfCards());
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.TEN));
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.EIGHT));
 
+        blackjack.dealerDecisions();
 
+        assertTrue(blackjack.getDealerHand().size() == 2);
+    }
+
+    @Test
+    void testDealerStandsOn17(){
+        blackjack.setDeck(DeckOfCards.createDeckOfCards());
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.TEN));
+        blackjack.getDealerHand().add(new Card(Suit.HEART, CardValues.SEVEN));
+
+        blackjack.dealerDecisions();
+
+        assertTrue(blackjack.getDealerHand().size() == 2);
+    }
 
 }
