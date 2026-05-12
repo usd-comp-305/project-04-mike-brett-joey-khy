@@ -150,6 +150,7 @@ public class BaccaratTest {
     void PlayerHandSizeOfThreeWhenDrawTest(){
         baccarat.dealInitialCards();
         baccarat.setPlayerTotal(3);
+        baccarat.setBankerTotal(4);
         baccarat.drawPlayerThirdCard();
         assertEquals(3, baccarat.getPlayerHand().size());
     }
@@ -158,6 +159,7 @@ public class BaccaratTest {
     void PlayerHandSizeOfTwoWhenNoDrawTest(){
         baccarat.dealInitialCards();
         baccarat.setPlayerTotal(8);
+        baccarat.setBankerTotal(4);
         baccarat.drawPlayerThirdCard();
         assertEquals(2, baccarat.getPlayerHand().size());
     }
@@ -211,6 +213,7 @@ public class BaccaratTest {
     @Test
     void BankerAlwaysDrawOnTwoWhenPlayerDrawTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.SPADE, CardValues.FIVE));
         baccarat.setBankerTotal(2);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -221,6 +224,7 @@ public class BaccaratTest {
     @Test
     void BankerWithThreeDrawsWhenPlayerThirdIsNotEightTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SEVEN));
         baccarat.setBankerTotal(3);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -231,6 +235,7 @@ public class BaccaratTest {
     @Test
     void BankerWithThreeStandsWhenPlayerThirdIsEightTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.EIGHT));
         baccarat.setBankerTotal(3);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -241,6 +246,7 @@ public class BaccaratTest {
     @Test
     void BankerWithFourDrawsWhenPlayerThirdIsFiveTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.FIVE));
         baccarat.setBankerTotal(4);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -251,6 +257,7 @@ public class BaccaratTest {
     @Test
     void BankerWithFourStandsWhenPlayerThirdIsNineTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.NINE));
         baccarat.setBankerTotal(4);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -261,6 +268,7 @@ public class BaccaratTest {
     @Test
     void BankerWithFiveDrawsWhenPlayerThirdIsSixTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SIX));
         baccarat.setBankerTotal(5);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -271,6 +279,7 @@ public class BaccaratTest {
     @Test
     void BankerWithFiveStandsWhenPlayerThirdIsThreeTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.THREE));
         baccarat.setBankerTotal(5);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -281,6 +290,7 @@ public class BaccaratTest {
     @Test
     void BankerWithSixDrawsWhenPlayerThirdIsSevenTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SEVEN));
         baccarat.setBankerTotal(6);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -291,6 +301,7 @@ public class BaccaratTest {
     @Test
     void BankerWithSixStandsWhenPlayerThirdIsFiveTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.FIVE));
         baccarat.setBankerTotal(6);
         int sizeBefore = baccarat.getBankerHand().size();
@@ -301,6 +312,7 @@ public class BaccaratTest {
     @Test
     void BankerWithSevenAlwaysStandsWhenPlayerDrewTest(){
         baccarat.dealInitialCards();
+        baccarat.setPlayerTotal(4);
         baccarat.setPlayerThird(new Card(Suit.HEART, CardValues.SIX));
         baccarat.setBankerTotal(7);
         int sizeBefore = baccarat.getBankerHand().size();
