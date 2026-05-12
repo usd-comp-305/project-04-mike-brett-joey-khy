@@ -42,6 +42,8 @@ public class Blackjack implements Game {
         betAmount = scanner.nextInt();
 
         dealStartingHand();
+        newPlayerTotal();
+
 
     }
 
@@ -61,10 +63,21 @@ public class Blackjack implements Game {
 
     }
 
+    void newPlayerTotal(){
+        playerTotal = 0;
+        for(Card card : playerHand){
+            playerTotal += card.cardValue.getCardValue();
+        }
+    }
+
     public ArrayList<Card> getPlayerHand(){
         return playerHand;
     }
     public ArrayList<Card> getDealerHand() {
         return dealerHand;
+    }
+
+    public int getPlayerTotal(){
+        return playerTotal;
     }
 }

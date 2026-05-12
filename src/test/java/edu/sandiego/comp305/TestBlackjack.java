@@ -8,19 +8,37 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class TestBlackjack {
+
+    Blackjack blackjack;
+
+    @BeforeEach
+    void setUp(){
+        Scanner mockScanner = mock(Scanner.class);
+        blackjack = new Blackjack(mockScanner);
+    }
+
     @Test
     void testPlayerStartsWithTwoCards(){
-        Scanner mockScanner = mock(Scanner.class);
-        Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.playGame();
         assertEquals(2, blackjack.getPlayerHand().size());
     }
 
     @Test
     void testDealerStartsWithTwoCards(){
-        Scanner mockScanner = mock(Scanner.class);
-        Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.playGame();
         assertEquals(2, blackjack.getDealerHand().size());
+    }
+
+    @Test
+    void testCorrectPlayerTotal(){
+        Card card1 = new Card(Suit.SPADE, CardValues.TWO);
+        Card card2 = new Card(Suit.SPADE, CardValues.TEN);
+        blackjack.getPlayerHand().add(card1);
+        blackjack.getPlayerHand().add(card2);
+
+        blackjack.newPlayerTotal();
+        assertEquals(12, blackjack.getPlayerTotal());
+
+
     }
 }
