@@ -29,6 +29,7 @@ public class Roulette implements Game{
         switch (userWagerChoice){
             case 1: return lastSpinColor.equals(Color.RED) ? amount : -amount;
             case 2: return lastSpinColor.equals(Color.BLACK) ? amount : -amount;
+            case 3: return lastSpinColor.equals(Color.GREEN) ? amount * singleOptionMultiplier : -amount;
             default: return 0;
         }
     }
