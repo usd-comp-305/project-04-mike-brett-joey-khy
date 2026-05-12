@@ -226,4 +226,12 @@ public class TestBlackjack {
         assertTrue(blackjack.getDealerHand().size() == 2);
     }
 
+    @Test
+    void  testHandleBetPlayerWins() {
+        blackjack.setPlayerTotal(20);
+        blackjack.setDealerTotal(18);
+
+        assertEquals(10, blackjack.handleBet(10));
+    }
+
 }

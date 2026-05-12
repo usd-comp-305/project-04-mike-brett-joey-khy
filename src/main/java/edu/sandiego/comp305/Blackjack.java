@@ -45,8 +45,42 @@ public class Blackjack implements Game {
         playerStands = true;
     }
 
-    public int handleBet(int bet) {
-        return 1;
+    public int handleBet(int bet){
+       int winAmount = 0;
+        if(hasSplit){
+           if(splitTotal > 21){
+               winAmount -= bet;
+           }
+           else if (splitTotal == 21 && splitHand.size() == 2) {
+               winAmount += (int) (bet*1.5);
+           }
+           else if(dealerTotal > 21){
+               winAmount += bet;
+           }
+           else if(dealerTotal > splitTotal){
+               winAmount -= bet;
+           }
+           else if(splitTotal > dealerTotal){
+               winAmount += bet;
+           }
+
+        }
+        if(playerTotal > 21){
+            winAmount -= bet;
+        }
+        else if (playerTotal == 21 && splitHand.size() == 2) {
+            winAmount += (int) (bet*1.5);
+        }
+        else if(dealerTotal > 21){
+            winAmount += bet;
+        }
+        else if(dealerTotal > playerTotal){
+            winAmount -= bet;
+        }
+        else if(playerTotal > dealerTotal){
+            winAmount += bet;
+        }
+        return winAmount;
     }
 
     public void playGame() {
@@ -56,10 +90,14 @@ public class Blackjack implements Game {
                 "1. Dealer stands on soft 17. \n" +
                 "2. You can only split once per deal. \n" +
                 "3. Blackjack pays out 3:2 \n" +
-                "4. Enter 1 to hit, 2 to stand, 3 to double, and 4 to split" +
+                "4. No doubling down on a split" +
+                "5. Enter 1 to hit, 2 to stand, 3 to double, and 4 to split" +
                 "How much would you like to bet:");
 
         betAmount = scanner.nextInt();
+        if(betAmount < 1){
+            throw new IllegalArgumentException("Bet amount must be at least $1");
+        }
 
         dealStartingHand();
         playerTotal = calculateHandTotal(playerHand);
@@ -79,6 +117,11 @@ public class Blackjack implements Game {
 
         dealerDecisions();
 
+        betAmount = handleBet(betAmount);
+        System.out.println("The result was " + betAmount);
+        updateBalance(betAmount);
+
+
 
 
 
@@ -88,6 +131,7 @@ public class Blackjack implements Game {
 
     @Override
     public void updateBalance(int amountWonOrLost) {
+        //Casino.balance += amountWonOrLost;
     }
 
     void dealStartingHand(){
@@ -135,7 +179,7 @@ public class Blackjack implements Game {
             else if(userDecision == STAND){
                 playerStands = true;
             }
-            else if(userDecision == DOUBLE && hand.size() == 2){
+            else if(userDecision == DOUBLE && hand.size() == 2 && !hasSplit){
                 doubleDown(hand);
                 handTotal = calculateHandTotal(hand);
             }
@@ -179,4 +223,8 @@ public class Blackjack implements Game {
     public boolean getPlayerStand(){return playerStands;}
     public ArrayList<Card> getSplitHand(){return splitHand;}
     void setDeck(ArrayList<Card> deck) {this.deck = deck;}
+    void setPlayerTotal(int total) { this.playerTotal = total; }
+    void setDealerTotal(int total) { this.dealerTotal = total; }
+    void setSplitTotal(int total) { this.splitTotal = total; }
+    void setHasSplit(boolean hasSplit) { this.hasSplit = hasSplit; }
 }
