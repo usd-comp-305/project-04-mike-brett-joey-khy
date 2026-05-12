@@ -122,9 +122,6 @@ public class Baccarat implements Game{
 
     @Override
     public int handleBet(int amount){
-        if (amount <= 0){
-            throw new IllegalArgumentException("Bet amount must be at least $1");
-        }
         String winner = determineWinner();
         if (winner.equals(betOn)){
             if (betOn.equals("tie")){
@@ -153,6 +150,9 @@ public class Baccarat implements Game{
         betOn = scanner.next().toLowerCase();
         System.out.println("Enter your bet amount: ");
         int bet = scanner.nextInt();
+        if (bet <= 0){
+            throw new IllegalArgumentException("Bet amount must be at least $1");
+        }
         dealInitialCards();
         System.out.println("Initial Cards:");
         printHand("Player", playerHand, playerTotal);
