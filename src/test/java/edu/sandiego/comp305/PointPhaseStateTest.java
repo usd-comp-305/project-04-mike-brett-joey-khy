@@ -2,53 +2,52 @@ package edu.sandiego.comp305;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class PointPhaseStateTest {
 
     private PointPhaseState state;
-    private Craps mockCraps;
+    private Craps craps;
 
     @BeforeEach
     void setUp() {
         state = new PointPhaseState();
-        mockCraps = Mockito.mock(Craps.class);
-        when(mockCraps.getPoint()).thenReturn(6);
+        craps = new Craps();
+        craps.setPoint(6);
+        craps.setState(new PointPhaseState());
     }
 
     @Test
     void rollingPointReturnsWin() {
-        assertEquals("WIN", state.handleRoll(6, mockCraps));
+        assertEquals("WIN", state.handleRoll(6, craps));
     }
 
     @Test
     void rollingPointTransitionsToComingOutState() {
-        state.handleRoll(6, mockCraps);
-        verify(mockCraps).setState(any(ComingOutState.class));
+        state.handleRoll(6, craps);
+        assertInstanceOf(ComingOutState.class, craps.getCurrentState());
     }
 
     @Test
     void rolling7ReturnsLose() {
-        assertEquals("LOSE", state.handleRoll(7, mockCraps));
+        assertEquals("LOSE", state.handleRoll(7, craps));
     }
 
     @Test
     void rolling7TransitionsToComingOutState() {
-        state.handleRoll(7, mockCraps);
-        verify(mockCraps).setState(any(ComingOutState.class));
+        state.handleRoll(7, craps);
+        assertInstanceOf(ComingOutState.class, craps.getCurrentState());
     }
 
     @Test
     void rollingNeitherPointNor7ReturnsContinue() {
-        assertEquals("CONTINUE", state.handleRoll(4, mockCraps));
+        assertEquals("CONTINUE", state.handleRoll(4, craps));
     }
 
     @Test
     void rollingContinueDoesNotTransitionState() {
-        state.handleRoll(4, mockCraps);
-        verify(mockCraps, never()).setState(any());
+        state.handleRoll(4, craps);
+        assertInstanceOf(PointPhaseState.class, craps.getCurrentState());
     }
 }

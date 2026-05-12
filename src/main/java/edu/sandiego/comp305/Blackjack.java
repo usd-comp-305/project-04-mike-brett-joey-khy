@@ -1,19 +1,24 @@
 package edu.sandiego.comp305;
 
-public class Blackjack implements Game{
+public class Blackjack implements Game {
+
     private int playerTotal;
-    private  int dealerTotal;
+    private int dealerTotal;
     private int betAmount;
 
-    private void hit(){}
+    private void hit() {}
+    private void split() {}
+    private void doubleDown() {}
 
-    private void split(){}
+    @Override
+    public int handleBet(int amount)
+    { return 0; }
 
-    private void doubleDown(){}
+    @Override
+    public void playGame()
+    {}
 
-    private void handleBet(int bet){}
-
-    private void playGame(){}
-
-    private void updateBalance(){}
+    @Override
+    public void updateBalance(int amount)
+    {}
 }

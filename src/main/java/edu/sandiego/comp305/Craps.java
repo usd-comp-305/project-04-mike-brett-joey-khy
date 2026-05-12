@@ -1,24 +1,35 @@
 package edu.sandiego.comp305;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class Craps implements Game {
 
     private CrapsState currentState;
-    private int pointTarget;
-    private int currentBetAmount;
+    private int point;
+    private int betAmount;
+    private final Random random = new Random();
 
     public Craps() {
         this.currentState = new ComingOutState();
-        this.pointTarget = 0;
+        this.point = 0;
     }
 
-    public void setState(CrapsState state)
-    {}
+    public CrapsState getCurrentState() {
+        return currentState;
+    }
 
-    public int getPoint()
-    { return 0; }
+    public void setState(CrapsState state) {
+        this.currentState = state;
+    }
 
-    public void setPoint(int pointTarget)
-    {}
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
 
     public int rollDie()
     { return 0; }

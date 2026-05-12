@@ -1,17 +1,59 @@
 package edu.sandiego.comp305;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Casino {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.util.Scanner;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+public class Casino {
+
+    public static int balance = 1000;
+    public static String playerName;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to USD Casino!");
+        System.out.print("Enter your name: ");
+        playerName = scanner.nextLine();
+        System.out.println("\nHello, " + playerName + "! You're starting with $" + balance + ".\n");
+
+        boolean running = true;
+        while (running) {
+            printMenu();
+            System.out.print("Choose a game: ");
+            int choice = scanner.nextInt();
+
+            if (choice == 0) {
+                running = false;
+                continue;
+            }
+
+            Game selectedGame = GameFactory.getGame(choice);
+
+            if (selectedGame == null) {
+                System.out.println("Invalid choice. Please try again.");
+                continue;
+            }
+
+            selectedGame.playGame();
+
+            if (balance <= 0) {
+                System.out.println("\nYou're out of money! Thanks for playing, " + playerName + ".");
+                running = false;
+            }
         }
+
+        System.out.println("\nGoodbye, " + playerName + "! You're leaving with $" + balance + ".");
+        scanner.close();
+    }
+
+    private static void printMenu() {
+        System.out.println("\n--- USD Casino ---");
+        System.out.println("Balance: $" + balance);
+        System.out.println("1. Slots");
+        System.out.println("2. Craps");
+        System.out.println("3. Blackjack");
+        System.out.println("4. Baccarat");
+        System.out.println("5. Roulette");
+        System.out.println("0. Exit");
+        System.out.println("------------------");
     }
 }

@@ -22,7 +22,8 @@ public class Baccarat implements Game{
     }
 
     @Override
-    public void handleBet(int amount){}
+    public int handleBet(int amount)
+    {return 0;}
 
     @Override
     public void playGame(){}
