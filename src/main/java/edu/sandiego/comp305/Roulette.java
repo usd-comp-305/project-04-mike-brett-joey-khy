@@ -105,6 +105,10 @@ public class Roulette implements Game{
         if (WagerType == 6){
             System.out.println("Enter the number you would like to bet on: ");
             specificNumberChoice = scanner.nextInt();
+            if (specificNumberChoice < 0 || specificNumberChoice > 36){
+                System.out.println("Invalid: Number must be between 0-36. Restarting...");
+                return getUserWager();
+            }
         }
         return WagerType;
     }
