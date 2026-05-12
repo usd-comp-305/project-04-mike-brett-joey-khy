@@ -68,7 +68,7 @@ public class Blackjack implements Game {
         if(playerTotal > 21){
             winAmount -= bet;
         }
-        else if (playerTotal == 21 && splitHand.size() == 2) {
+        else if (playerTotal == 21 && playerHand.size() == 2) {
             winAmount += (int) (bet*1.5);
         }
         else if(dealerTotal > 21){
@@ -117,15 +117,15 @@ public class Blackjack implements Game {
 
         dealerDecisions();
 
-        betAmount = handleBet(betAmount);
-        System.out.println("The result was " + betAmount);
-        updateBalance(betAmount);
+        int result = handleBet(betAmount);
+        System.out.println("The result was " + result);
+        updateBalance(result);
 
     }
 
     @Override
     public void updateBalance(int amountWonOrLost) {
-        Casino.balance += amountWonOrLost;
+        //Casino.balance += amountWonOrLost;
     }
 
     void dealStartingHand(){

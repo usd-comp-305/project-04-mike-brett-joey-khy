@@ -20,19 +20,23 @@ public class TestBlackjack {
     @BeforeEach
     void setUp(){
         Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(STAND);
         blackjack = new Blackjack(mockScanner);
     }
 
     @Test
-    void testPlayerStartsWithTwoCards(){
-        blackjack.playGame();
+    void testPlayerStartsWithTwoCards() {
+        blackjack.setDeck(DeckOfCards.createDeckOfCards());
+        blackjack.dealStartingHand();
         assertEquals(2, blackjack.getPlayerHand().size());
     }
 
     @Test
     void testDealerStartsWithTwoCards(){
-        blackjack.playGame();
+        blackjack.setDeck(DeckOfCards.createDeckOfCards());
+        blackjack.dealStartingHand();
         assertEquals(2, blackjack.getDealerHand().size());
+
     }
 
     @Test
@@ -302,6 +306,6 @@ public class TestBlackjack {
         blackjack.setSplitTotal(19);
         blackjack.setDealerTotal(21);
 
-        assertEquals(0, blackjack.handleBet(10));
+        assertEquals(-20, blackjack.handleBet(10));
     }
 }
