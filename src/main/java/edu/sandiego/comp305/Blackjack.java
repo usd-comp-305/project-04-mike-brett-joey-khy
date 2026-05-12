@@ -121,17 +121,11 @@ public class Blackjack implements Game {
         System.out.println("The result was " + betAmount);
         updateBalance(betAmount);
 
-
-
-
-
-
-
     }
 
     @Override
     public void updateBalance(int amountWonOrLost) {
-        //Casino.balance += amountWonOrLost;
+        Casino.balance += amountWonOrLost;
     }
 
     void dealStartingHand(){

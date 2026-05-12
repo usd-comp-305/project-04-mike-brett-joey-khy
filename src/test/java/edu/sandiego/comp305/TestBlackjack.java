@@ -227,11 +227,81 @@ public class TestBlackjack {
     }
 
     @Test
-    void  testHandleBetPlayerWins() {
+    void testHandleBetPlayerWins() {
         blackjack.setPlayerTotal(20);
         blackjack.setDealerTotal(18);
 
         assertEquals(10, blackjack.handleBet(10));
     }
 
+    @Test
+    void testHandleBetPlayerLoses(){
+        blackjack.setPlayerTotal(18);
+        blackjack.setDealerTotal(20);
+
+        assertEquals(-10, blackjack.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetPush(){
+        blackjack.setPlayerTotal(20);
+        blackjack.setDealerTotal(20);
+
+        assertEquals(0, blackjack.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetPlayerBusts(){
+        blackjack.setPlayerTotal(22);
+        blackjack.setDealerTotal(20);
+
+        assertEquals(-10, blackjack.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetDealerBusts(){
+        blackjack.setPlayerTotal(20);
+        blackjack.setDealerTotal(22);
+
+        assertEquals(10, blackjack.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetBlackjackPays3to2() {
+        blackjack.getPlayerHand().add(new Card(Suit.HEART, CardValues.ACE));
+        blackjack.getPlayerHand().add(new Card(Suit.SPADE, CardValues.TEN));
+        blackjack.setPlayerTotal(21);
+        blackjack.setDealerTotal(20);
+
+        assertEquals(15, blackjack.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetSplitOneWinsOneLoses(){
+        blackjack.setHasSplit(true);
+        blackjack.setPlayerTotal(20);
+        blackjack.setSplitTotal(15);
+        blackjack.setDealerTotal(18);
+
+        assertEquals(0, blackjack.handleBet(10));
+    }
+    @Test
+    void testHandleBetSplitBothWin(){
+        blackjack.setHasSplit(true);
+        blackjack.setPlayerTotal(20);
+        blackjack.setSplitTotal(19);
+        blackjack.setDealerTotal(18);
+
+        assertEquals(20, blackjack.handleBet(10));
+    }
+
+    @Test
+    void testHandleBetSplitLosesBoth(){
+        blackjack.setHasSplit(true);
+        blackjack.setPlayerTotal(20);
+        blackjack.setSplitTotal(19);
+        blackjack.setDealerTotal(21);
+
+        assertEquals(0, blackjack.handleBet(10));
+    }
 }
