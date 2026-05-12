@@ -64,7 +64,15 @@ public class RouletteTest {
 
     @Test
     void testHandleBetLoseOnGreen(){
+        int redSpaceOnWheel = 1;
+        int userGuessesGreen = 3;
+        when(mockRng.nextInt(MAX_SPACES_ON_WHEEL)).thenReturn(redSpaceOnWheel);
+        when(mockScanner.nextInt()).thenReturn(userGuessesGreen);
 
+        wheel.getUserWager();
+        wheel.spinWheel();
+
+        assertEquals(-10, wheel.handleBet(10));
     }
 
     @Test
