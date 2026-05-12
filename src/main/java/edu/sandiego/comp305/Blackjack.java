@@ -101,23 +101,14 @@ public class Blackjack implements Game {
                 "2. You can only split once per deal. \n" +
                 "3. Blackjack pays out 3:2 \n" +
                 "4. No doubling down on a split \n" +
-                "5. Enter 1 to hit, 2 to stand, 3 to double, and 4 to split \n" +
-                "6. Enter 0 to leave blackjack \n");
+                "5. Enter 1 to hit, 2 to stand, 3 to double, and 4 to split \n");
 
-        while(true) {
             System.out.print("How much would you like to bet: ");
             betAmount = scanner.nextInt();
 
-
-            if (betAmount == 0) {
-                System.out.println("Thanks for playing! Your final balance is " + Casino.balance);
-                return;
-            }
-            if (betAmount < 0) {
+            if (betAmount < 1) {
                 throw new IllegalArgumentException("Bet amount must be at least $1");
             }
-
-            resetGameState();
 
             deck = DeckOfCards.createDeckOfCards();
             DeckOfCards.shuffleDeck(deck);
@@ -148,19 +139,11 @@ public class Blackjack implements Game {
             updateBalance(result);
             System.out.println("Your new balance is " + Casino.balance);
 
-        }
+    }
 
-    }
-    private void resetGameState() {
-        playerHand.clear();
-        dealerHand.clear();
-        splitHand.clear();
-        playerStands = false;
-        hasSplit = false;
-        playerTotal = 0;
-        dealerTotal = 0;
-        splitTotal = 0;
-    }
+
+
+
 
 
     @Override
