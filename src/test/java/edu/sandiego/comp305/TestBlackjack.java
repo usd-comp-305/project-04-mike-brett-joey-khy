@@ -107,4 +107,32 @@ public class TestBlackjack {
         blackjack.playGame();
         assert(blackjack.getPlayerStand());
     }
+
+    @Test
+    void splitCreatesNewHand(){
+        ArrayList<Card> riggedDeck = new ArrayList<>();
+
+        riggedDeck.add(new Card(Suit.HEART, CardValues.EIGHT));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.TEN));
+        riggedDeck.add(new Card(Suit.DIAMOND, CardValues.EIGHT));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.SEVEN));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.FIVE));
+        riggedDeck.add(new Card(Suit.HEART, CardValues.SIX));
+
+        Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(4).thenReturn(2).thenReturn(2);
+
+        Blackjack blackjack = new Blackjack(mockScanner);
+        blackjack.setDeck(riggedDeck);
+        blackjack.dealStartingHand();
+        blackjack.newPlayerTotal();
+        blackjack.hasSplit = false;
+        blackjack.playerDecisions(blackjack.hasSplit);
+        assertFalse(blackjack.getSplitHand().isEmpty());
+    }
+
+
+
+
+
 }

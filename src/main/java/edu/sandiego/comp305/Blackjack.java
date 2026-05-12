@@ -6,17 +6,18 @@ public class Blackjack implements Game {
     private int playerTotal;
     private int dealerTotal;
     private int betAmount;
-    private ArrayList<Card> playerHand;
-    private ArrayList<Card> dealerHand;
+    private ArrayList<Card> playerHand = new ArrayList<>();;
+    private ArrayList<Card> dealerHand = new ArrayList<>();;
+    private ArrayList<Card> splitHand = new ArrayList<>();
     private Card dealerFaceUpCard;
     private ArrayList<Card> deck;
     private Scanner scanner;
     private boolean playerStands;
+    boolean hasSplit;
+
 
     public Blackjack(Scanner scanner){
         this.scanner = scanner;
-        playerHand = new ArrayList<>();
-        dealerHand = new ArrayList<>();
     }
 
 
@@ -26,6 +27,9 @@ public class Blackjack implements Game {
     }
 
     private void split() {
+        splitHand.add(playerHand.removeLast());
+        hit();
+
 
     }
 
@@ -56,7 +60,7 @@ public class Blackjack implements Game {
         newPlayerTotal();
 
 
-        boolean hasSplit = false;
+        hasSplit = false;
         playerDecisions(hasSplit);
     }
 
@@ -139,10 +143,18 @@ public class Blackjack implements Game {
     public int getPlayerTotal(){
         return playerTotal;
     }
+
     public int getBetAmount(){
         return betAmount;
     }
+
     public boolean getPlayerStand(){
         return playerStands;
+    }
+    public ArrayList<Card> getSplitHand(){
+        return splitHand;
+    }
+    void setDeck(ArrayList<Card> deck) {
+        this.deck = deck;
     }
 }
