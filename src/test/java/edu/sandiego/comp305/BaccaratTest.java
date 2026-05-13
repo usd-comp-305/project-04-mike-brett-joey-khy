@@ -12,10 +12,12 @@ public class BaccaratTest {
 
     private Scanner scanner;
 
+    private static final int STARTING_BALANCE = 1000;
+
     @BeforeEach
     void setUp(){
         baccarat = new Baccarat(scanner);
-        Casino.balance = 1000;
+        Casino.addToBalance(STARTING_BALANCE - Casino.balance);
     }
 
 
@@ -371,14 +373,14 @@ public class BaccaratTest {
 
     @Test
     void UpdateBalanceIncreasesBalanceOnWinTest(){
-        Casino.balance = 1000;
+        Casino.addToBalance(STARTING_BALANCE - Casino.balance);
         baccarat.updateBalance(200);
         assertEquals(1200, Casino.balance);
     }
 
     @Test
     void UpdateBalanceDecreasesBalanceOnLossTest(){
-        Casino.balance = 1000;
+        Casino.addToBalance(STARTING_BALANCE-Casino.balance);
         baccarat.updateBalance(-200);
         assertEquals(800, Casino.balance);
     }

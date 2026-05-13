@@ -10,15 +10,15 @@ import static org.mockito.Mockito.*;
 
 public class TestBlackjack {
 
-    final int HIT = 1;
+    final static int HIT = 1;
 
-    final int STAND = 2;
+    final static int STAND = 2;
 
-    final int DOUBLE = 3;
+    final static int DOUBLE = 3;
 
-    final int SPLIT = 4;
+    final static int SPLIT = 4;
 
-    final int BET_SIZE = 10;
+    final static int BET_SIZE = 10;
 
     Blackjack blackjack;
 

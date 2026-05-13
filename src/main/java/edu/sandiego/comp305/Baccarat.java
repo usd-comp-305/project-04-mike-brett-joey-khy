@@ -233,11 +233,12 @@ public class Baccarat implements Game{
     }
 
     public List<Card> getPlayerHand(){
-        return playerHand;
+
+        return new ArrayList<>(playerHand);
     }
 
     public List<Card> getBankerHand(){
-        return bankerHand;
+        return new ArrayList<>(bankerHand);
     }
 
 }

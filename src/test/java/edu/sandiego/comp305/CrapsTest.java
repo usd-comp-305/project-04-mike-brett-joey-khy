@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -32,8 +34,8 @@ public class CrapsTest {
 
     @BeforeEach
     void setUp() {
-        Casino.balance = STARTING_BALANCE;
-        scanner = new Scanner(System.in);
+        Casino.addToBalance(STARTING_BALANCE - Casino.balance);
+        scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         rng = new Random();
         craps = new Craps(scanner,rng);
     }

@@ -17,7 +17,7 @@ public class Craps implements Game {
 
     private final Scanner scanner;
 
-    private Random random;
+    private final Random random;
 
     public Craps(final Scanner scanner,final Random random) {
         this.scanner = scanner;

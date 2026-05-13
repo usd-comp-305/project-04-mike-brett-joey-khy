@@ -15,7 +15,7 @@ public class RouletteWheel {
 
     public List<Color> getWheel() {
 
-        return wheel;
+        return new ArrayList<>(wheel);
     }
 
     public void createWheel(){

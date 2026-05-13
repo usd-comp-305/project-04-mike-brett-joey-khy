@@ -253,13 +253,13 @@ public class Blackjack implements Game {
 
 
     public ArrayList<Card> getPlayerHand() {
-        return playerHand; }
+        return new ArrayList<>(playerHand); }
 
     public ArrayList<Card> getDealerHand() {
-        return dealerHand; }
+        return new ArrayList<>(dealerHand); }
 
     public ArrayList<Card> getSplitHand() {
-        return splitHand; }
+        return new ArrayList<>(splitHand); }
 
     public int getBetAmount() {
         return betAmount; }

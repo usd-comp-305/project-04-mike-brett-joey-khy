@@ -3,6 +3,8 @@ package edu.sandiego.comp305;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -16,7 +18,7 @@ public class SlotsTest {
 
     @BeforeEach
     void setUp(){
-        scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         rng = new Random();
         slots = new Slots(scanner, rng);
     }

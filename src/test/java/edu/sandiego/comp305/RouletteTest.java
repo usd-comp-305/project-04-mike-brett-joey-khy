@@ -12,13 +12,13 @@ import static org.mockito.Mockito.when;
 
 public class RouletteTest {
 
+    private static final int MAX_SPACES_ON_WHEEL = 37;
+
     private Roulette roulette;
 
     private Random mockRng;
 
     private Scanner mockScanner;
-
-    private final int MAX_SPACES_ON_WHEEL = 37;
 
     private int amountWagered = 10;
 
