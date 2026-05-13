@@ -3,7 +3,7 @@ package edu.sandiego.comp305;
 public class PointPhaseState implements CrapsState {
 
     @Override
-    public String handleRoll(int roll, Craps context) {
+    public String handleRoll(final int roll,final Craps context) {
         if (roll == context.getPoint()) {
             context.setState(new ComingOutState());
             return "WIN";

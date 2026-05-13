@@ -1,4 +1,5 @@
 package edu.sandiego.comp305;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -10,16 +11,20 @@ import static org.mockito.Mockito.*;
 public class TestBlackjack {
 
     final int HIT = 1;
+
     final int STAND = 2;
+
     final int DOUBLE = 3;
+
     final int SPLIT = 4;
+
     final int BET_SIZE = 10;
 
     Blackjack blackjack;
 
     @BeforeEach
     void setUp(){
-        Scanner mockScanner = mock(Scanner.class);
+        final Scanner mockScanner = mock(Scanner.class);
         when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(STAND);
         blackjack = new Blackjack(mockScanner);
     }
@@ -41,45 +46,49 @@ public class TestBlackjack {
 
     @Test
     void testCorrectPlayerTotal(){
-        Card card1 = new Card(Suit.SPADE, CardValues.TWO);
-        Card card2 = new Card(Suit.SPADE, CardValues.TEN);
+        final Card card1 = new Card(Suit.SPADE, CardValues.TWO);
+        final Card card2 = new Card(Suit.SPADE, CardValues.TEN);
         blackjack.getPlayerHand().add(card1);
         blackjack.getPlayerHand().add(card2);
 
-        int total = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        final int total = blackjack
+                .calculateHandTotal(blackjack.getPlayerHand());
         assertEquals(12, total);
     }
 
     @Test
     void testCorrectPlayerTotalAce(){
-        Card card1 = new Card(Suit.SPADE, CardValues.ACE);
-        Card card2 = new Card(Suit.SPADE, CardValues.TEN);
+        final Card card1 = new Card(Suit.SPADE, CardValues.ACE);
+        final Card card2 = new Card(Suit.SPADE, CardValues.TEN);
         blackjack.getPlayerHand().add(card1);
         blackjack.getPlayerHand().add(card2);
-        int total = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        final int total = blackjack
+                .calculateHandTotal(blackjack.getPlayerHand());
         assertEquals(21, total);
     }
 
     @Test
     void testAceGoesBackToOne(){
-        Card card1 = new Card(Suit.SPADE, CardValues.ACE);
-        Card card2 = new Card(Suit.SPADE, CardValues.TEN);
-        Card card3 = new Card(Suit.CLUB, CardValues.ACE);
+        final Card card1 = new Card(Suit.SPADE, CardValues.ACE);
+        final Card card2 = new Card(Suit.SPADE, CardValues.TEN);
+        final Card card3 = new Card(Suit.CLUB, CardValues.ACE);
 
         blackjack.getPlayerHand().add(card1);
         blackjack.getPlayerHand().add(card2);
         blackjack.getPlayerHand().add(card3);
 
-        int total = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        final int total = blackjack.calculateHandTotal
+                (blackjack.getPlayerHand());
         assertEquals(12, total);
     }
 
     @Test
     void testHitAddsCardToHand(){
-        Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(HIT).thenReturn(STAND);
+        final Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE)
+                .thenReturn(HIT).thenReturn(STAND);
 
-        Blackjack blackjack = new Blackjack(mockScanner);
+        final Blackjack blackjack = new Blackjack(mockScanner);
 
         blackjack.playGame();
         assertEquals(3, blackjack.getPlayerHand().size());
@@ -87,10 +96,11 @@ public class TestBlackjack {
 
     @Test
     void testDoubleDownAddsCardToHand(){
-        Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(DOUBLE).thenReturn(STAND);
+        final Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE)
+                .thenReturn(DOUBLE).thenReturn(STAND);
 
-        Blackjack blackjack = new Blackjack(mockScanner);
+        final Blackjack blackjack = new Blackjack(mockScanner);
 
         blackjack.playGame();
         assertEquals(3, blackjack.getPlayerHand().size());
@@ -98,10 +108,10 @@ public class TestBlackjack {
 
     @Test
     void testDoubleDownDoublesBet(){
-        Scanner mockScanner = mock(Scanner.class);
+        final Scanner mockScanner = mock(Scanner.class);
         when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(DOUBLE);
 
-        Blackjack blackjack = new Blackjack(mockScanner);
+        final Blackjack blackjack = new Blackjack(mockScanner);
 
         blackjack.playGame();
         assertEquals(20, blackjack.getBetAmount());
@@ -109,10 +119,11 @@ public class TestBlackjack {
 
     @Test
     void testDoubleDownCantHit(){
-        Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(BET_SIZE).thenReturn(DOUBLE).thenReturn(HIT);
+        final Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(BET_SIZE)
+                .thenReturn(DOUBLE).thenReturn(HIT);
 
-        Blackjack blackjack = new Blackjack(mockScanner);
+        final Blackjack blackjack = new Blackjack(mockScanner);
 
         blackjack.playGame();
         assert(blackjack.getPlayerStand());
@@ -120,7 +131,7 @@ public class TestBlackjack {
 
     @Test
     void splitCreatesNewHand(){
-        ArrayList<Card> riggedDeck = new ArrayList<>();
+        final ArrayList<Card> riggedDeck = new ArrayList<>();
 
         riggedDeck.add(new Card(Suit.HEART, CardValues.EIGHT));
         riggedDeck.add(new Card(Suit.HEART, CardValues.TEN));
@@ -129,34 +140,37 @@ public class TestBlackjack {
         riggedDeck.add(new Card(Suit.HEART, CardValues.FIVE));
         riggedDeck.add(new Card(Suit.HEART, CardValues.SIX));
 
-        Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(SPLIT).thenReturn(STAND).thenReturn(STAND);
+        final Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(SPLIT)
+                .thenReturn(STAND).thenReturn(STAND);
 
-        Blackjack blackjack = new Blackjack(mockScanner);
+        final Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.setDeck(riggedDeck);
         blackjack.dealStartingHand();
 
-        int playerTotal = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        final int playerTotal = blackjack.calculateHandTotal
+                (blackjack.getPlayerHand());
         blackjack.playerDecisions(blackjack.getPlayerHand(), playerTotal);
         assertFalse(blackjack.getSplitHand().isEmpty());
     }
 
     @Test
     void cantSplitDifferentCards(){
-        ArrayList<Card> riggedDeck = new ArrayList<>();
+        final ArrayList<Card> riggedDeck = new ArrayList<>();
 
         riggedDeck.add(new Card(Suit.HEART, CardValues.EIGHT));
         riggedDeck.add(new Card(Suit.HEART, CardValues.TEN));
         riggedDeck.add(new Card(Suit.HEART, CardValues.SEVEN));
         riggedDeck.add(new Card(Suit.HEART, CardValues.FIVE));
 
-        Scanner mockScanner = mock(Scanner.class);
+        final Scanner mockScanner = mock(Scanner.class);
         when(mockScanner.nextInt()).thenReturn(SPLIT).thenReturn(STAND);
 
-        Blackjack blackjack = new Blackjack(mockScanner);
+        final Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.setDeck(riggedDeck);
         blackjack.dealStartingHand();
-        int playerTotal = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        final int playerTotal = blackjack.calculateHandTotal
+                (blackjack.getPlayerHand());
         blackjack.playerDecisions(blackjack.getPlayerHand(), playerTotal);
 
         assertTrue(blackjack.getSplitHand().isEmpty());
@@ -164,7 +178,7 @@ public class TestBlackjack {
 
     @Test
     void cantSplitTwice(){
-        ArrayList<Card> riggedDeck = new ArrayList<>();
+        final ArrayList<Card> riggedDeck = new ArrayList<>();
         riggedDeck.add(new Card(Suit.HEART, CardValues.EIGHT));
         riggedDeck.add(new Card(Suit.HEART, CardValues.TEN));
         riggedDeck.add(new Card(Suit.DIAMOND, CardValues.EIGHT));
@@ -172,13 +186,15 @@ public class TestBlackjack {
         riggedDeck.add(new Card(Suit.CLUB, CardValues.EIGHT));
         riggedDeck.add(new Card(Suit.SPADE, CardValues.EIGHT));
 
-        Scanner mockScanner = mock(Scanner.class);
-        when(mockScanner.nextInt()).thenReturn(SPLIT).thenReturn(SPLIT).thenReturn(STAND).thenReturn(STAND);
+        final Scanner mockScanner = mock(Scanner.class);
+        when(mockScanner.nextInt()).thenReturn(SPLIT)
+                .thenReturn(SPLIT).thenReturn(STAND).thenReturn(STAND);
 
-        Blackjack blackjack = new Blackjack(mockScanner);
+        final Blackjack blackjack = new Blackjack(mockScanner);
         blackjack.setDeck(riggedDeck);
         blackjack.dealStartingHand();
-        int playerTotal = blackjack.calculateHandTotal(blackjack.getPlayerHand());
+        final int playerTotal = blackjack.calculateHandTotal
+                (blackjack.getPlayerHand());
         blackjack.playerDecisions(blackjack.getPlayerHand(), playerTotal);
 
 
@@ -289,6 +305,7 @@ public class TestBlackjack {
 
         assertEquals(0, blackjack.handleBet(10));
     }
+
     @Test
     void testHandleBetSplitBothWin(){
         blackjack.setHasSplit(true);

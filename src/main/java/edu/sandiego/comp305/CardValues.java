@@ -17,11 +17,13 @@ public enum CardValues {
 
     private final int value;
 
-    CardValues(int value){
+    CardValues(final int value){
+
         this.value = value;
     }
 
     public int getCardValue(){
+
         return value;
     }
 }

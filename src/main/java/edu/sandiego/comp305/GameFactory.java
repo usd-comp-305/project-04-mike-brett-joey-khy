@@ -4,9 +4,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameFactory {
-    public static Game getGame(int choice) {
-        Scanner scanner = new Scanner(System.in);
-        Random rng = new Random();
+
+    private GameFactory(){}
+
+    public static Game getGame(final int choice) {
+        final Scanner scanner = new Scanner(System.in);
+        final Random rng = new Random();
         switch (choice) {
             case 1: return new Slots(scanner, rng);
             case 2: return new Craps(scanner, rng);

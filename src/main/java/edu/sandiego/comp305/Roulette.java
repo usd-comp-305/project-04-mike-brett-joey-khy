@@ -5,55 +5,95 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Roulette implements Game{
-    private RouletteWheel wheel;
     private static final int MAX_SPACES_ON_WHEEL = 37;
+
+    private RouletteWheel wheel;
+
     private Random rng;
+
     private Scanner scanner;
+
     private int WagerType;
+
     private int specificNumberChoice;
+
     private int lastSpinNumber;
+
     private final int SINGLE_OPTION_MULTIPLIER = 35;
+
     private final int EVEN_OR_ODD_FACTOR = 2;
+
     private final int MAX_WAGER_TYPE = 6;
+
     private final int MAX_ROULETTE_NUMBER = 36;
+
     private Color lastSpinColor;
 
-    public Roulette(Scanner scanner, Random rng){
+    public Roulette(final Scanner scanner,final Random rng){
         this.rng = rng;
         this.scanner = scanner;
         wheel = new RouletteWheel();
     }
 
     @Override
-    public int handleBet(int amount) {
-        switch (WagerType){
-            case 1: return lastSpinColor.equals(Color.RED) ? amount : -amount;
-            case 2: return lastSpinColor.equals(Color.BLACK) ? amount : -amount;
-            case 3: return lastSpinColor.equals(Color.GREEN) ? amount * SINGLE_OPTION_MULTIPLIER : -amount;
-            case 4: return lastSpinNumber % EVEN_OR_ODD_FACTOR == 0 ? amount : -amount;
-            case 5: return lastSpinNumber % EVEN_OR_ODD_FACTOR != 0 ? amount : -amount;
-            case 6: return lastSpinNumber == specificNumberChoice ? amount * SINGLE_OPTION_MULTIPLIER : -amount;
-            default: return 0;
+    public int handleBet(final int amount) {
+        switch (WagerType) {
+            case 1:
+                if (lastSpinColor.equals(Color.RED)) {
+                    return amount;
+                }
+                return -amount;
+            case 2:
+                if (lastSpinColor.equals(Color.BLACK)) {
+                    return amount;
+                }
+                return -amount;
+            case 3:
+                if (lastSpinColor.equals(Color.GREEN)) {
+                    return amount * SINGLE_OPTION_MULTIPLIER;
+                }
+                return -amount;
+            case 4:
+                if (lastSpinNumber % EVEN_OR_ODD_FACTOR == 0) {
+                    return amount;
+                }
+                return -amount;
+            case 5:
+                if (lastSpinNumber % EVEN_OR_ODD_FACTOR != 0) {
+                    return amount;
+                }
+                return -amount;
+            case 6:
+                if (lastSpinNumber == specificNumberChoice) {
+                    return amount * SINGLE_OPTION_MULTIPLIER;
+                }
+                return -amount;
+            default:
+                return 0;
         }
     }
 
-   @Override
-   public void playGame() {
+
+    @Override
+    public void playGame() {
         boolean isContinuingToPlay = true;
         System.out.println("Welcome to Roulette!");
         while (isContinuingToPlay){
-            System.out.println("How much would you like to bet? (Enter 0 to stop playing) ");
-            int wagerAmount = scanner.nextInt();
+            System.out.println("How much would you like " +
+                    "to bet? (Enter 0 to stop playing) ");
+            final int wagerAmount = scanner.nextInt();
             if (wagerAmount == 0){
                 isContinuingToPlay = false;
                 continue;
             }
             if (wagerAmount > Casino.balance){
-                System.out.println("Invalid wager: You can't bet more than your balance.");
+                System.out.println("Invalid wager: You can't " +
+                        "bet more than your balance.");
                 continue;
             }
             if (wagerAmount < 0) {
-                System.out.println("Invalid wager: The bet must be a positive number.");
+                System.out.println("Invalid wager: The bet " +
+                        "must be a positive number.");
                 continue;
             }
 
@@ -62,15 +102,16 @@ public class Roulette implements Game{
 
             System.out.println("Spinning wheel...");
             spinWheel();
-            System.out.println("The winning square is... " + lastSpinNumber + " " + lastSpinColor);
-            int balanceChange = handleBet(wagerAmount);
+            System.out.println("The winning square is... "
+                    + lastSpinNumber + " " + lastSpinColor);
+            final int balanceChange = handleBet(wagerAmount);
 
             updateBalance(balanceChange);
         }
     }
 
     @Override
-    public void updateBalance(int amount) {
+    public void updateBalance(final int amount) {
         Casino.balance += amount;
         if (amount > 0){
             System.out.println("Congrats! You won $" + amount);
@@ -83,14 +124,15 @@ public class Roulette implements Game{
 
     public Color spinWheel() {
         lastSpinNumber = rng.nextInt(MAX_SPACES_ON_WHEEL);
-        List<Color> colors = wheel.getWheel();
+        final List<Color> colors = wheel.getWheel();
         lastSpinColor = colors.get(lastSpinNumber);
 
         return lastSpinColor;
     }
 
     public int getUserWager() {
-        System.out.println("What is your wager? (Enter only an int)");
+        System.out.println("What is your wager? " +
+                "(Enter only an int)");
         System.out.println("1 for Red");
         System.out.println("2 for Black");
         System.out.println("3 for Green");
@@ -100,15 +142,19 @@ public class Roulette implements Game{
 
         WagerType = scanner.nextInt();
         if (WagerType <= 0 || WagerType > MAX_WAGER_TYPE){
-            System.out.println("Invalid: Answer must be between 1-6. Enter a valid wager.");
+            System.out.println("Invalid: Answer must be " +
+                    "between 1-6. Enter a valid wager.");
             return getUserWager();
         }
 
         if (WagerType == MAX_WAGER_TYPE){
-            System.out.println("Enter the number you would like to bet on: ");
+            System.out.println("Enter the number you " +
+                    "would like to bet on: ");
             specificNumberChoice = scanner.nextInt();
-            if (specificNumberChoice < 0 || specificNumberChoice > MAX_ROULETTE_NUMBER){
-                System.out.println("Invalid: Number must be between 0-36. Restarting...");
+            if (specificNumberChoice < 0 ||
+                    specificNumberChoice > MAX_ROULETTE_NUMBER){
+                System.out.println("Invalid: Number " +
+                        "must be between 0-36. Restarting...");
                 return getUserWager();
             }
         }

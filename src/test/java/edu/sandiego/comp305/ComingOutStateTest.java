@@ -10,8 +10,11 @@ import java.util.Random;
 public class ComingOutStateTest {
 
     private ComingOutState state;
+
     private Craps craps;
+
     private Scanner scanner;
+
     private Random rng;
 
     @BeforeEach

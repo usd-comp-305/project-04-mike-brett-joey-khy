@@ -2,9 +2,9 @@ package edu.sandiego.comp305;
 
 public interface Game {
 
-    int handleBet(int amount);
+    public abstract int handleBet(final int amount);
 
-    void playGame();
+    public abstract void playGame();
 
-    void updateBalance(int amountWonOrLost);
+    public abstract void updateBalance(final int amountWonOrLost);
 }

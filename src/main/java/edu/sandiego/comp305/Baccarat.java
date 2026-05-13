@@ -6,16 +6,24 @@ import java.util.Scanner;
 
 public class Baccarat implements Game{
     private int playerTotal;
+
     private int bankerTotal;
+
     private ArrayList<Card> deck;
+
     private String betOn;
+
     private Card playerThird;
+
     private Card bankerThird;
+
     private List<Card> playerHand;
+
     private List<Card> bankerHand;
+
     private Scanner scanner;
 
-    public Baccarat(Scanner scanner){
+    public Baccarat(final Scanner scanner){
         this.scanner = scanner;
         this.deck = DeckOfCards.createDeckOfCards();
         this.deck = DeckOfCards.shuffleDeck(deck);
@@ -28,21 +36,21 @@ public class Baccarat implements Game{
         this.bankerHand = new ArrayList<>();
     }
 
-    private int dealHand(List<Card> hand){
-        Card card1 = DeckOfCards.dealCard(deck);
-        Card card2 = DeckOfCards.dealCard(deck);
+    private int dealHand(final List<Card> hand){
+        final Card card1 = DeckOfCards.dealCard(deck);
+        final Card card2 = DeckOfCards.dealCard(deck);
         hand.add(card1);
         hand.add(card2);
         return (getCardValue(card1)+getCardValue(card2)) % 10;
     }
 
-    private Card drawCard(List<Card> hand, int currentTotal){
-        Card card = DeckOfCards.dealCard(deck);
+    private Card drawCard(final List<Card> hand,final int currentTotal){
+        final Card card = DeckOfCards.dealCard(deck);
         hand.add(card);
         return card;
     }
 
-    private int addCardValue(int currentTotal, Card card){
+    private int addCardValue(final int currentTotal,final Card card){
         return (currentTotal + getCardValue(card)) % 10;
     }
 
@@ -79,7 +87,7 @@ public class Baccarat implements Game{
     }
 
     private boolean shouldBankerDraw(){
-        int playerThirdValue = getCardValue(playerThird);
+        final int playerThirdValue = getCardValue(playerThird);
         switch (bankerTotal) {
             case 0: case 1: case 2:
                 return true;
@@ -106,8 +114,8 @@ public class Baccarat implements Game{
         }
     }
 
-    public static int getCardValue(Card card){
-        CardValues cardvalue = card.getFaceValue();
+    public static int getCardValue(final Card card){
+        final CardValues cardvalue = card.getFaceValue();
         if (cardvalue == CardValues.ACE) {
             return 1;
         } else if (cardvalue.getCardValue() >= 10) {
@@ -117,12 +125,13 @@ public class Baccarat implements Game{
     }
 
     public boolean isNatural(){
+
         return (playerTotal>=8 || bankerTotal >= 8);
     }
 
     @Override
-    public int handleBet(int amount){
-        String winner = determineWinner();
+    public int handleBet(final int amount){
+        final String winner = determineWinner();
         if (winner.equals(betOn)){
             if (betOn.equals("tie")){
                 return amount*8;
@@ -132,10 +141,12 @@ public class Baccarat implements Game{
         return -amount;
     }
 
-    public void printHand(String option, List<Card> hand, int total){
+    public void printHand(final String option,
+                          final List<Card> hand,final int total){
         System.out.print(option + " hand :");
         for (int i = 0; i < hand.size(); i++){
-            System.out.print(hand.get(i).getFaceValue() + " of " + hand.get(i).getSuit());
+            System.out.print(hand.get(i).getFaceValue()
+                    + " of " + hand.get(i).getSuit());
             if (i < hand.size() - 1){
                 System.out.print(", ");
             }
@@ -143,9 +154,11 @@ public class Baccarat implements Game{
         System.out.println("    Total of " + total);
     }
 
-    private void printThirdCardResult(String label, Card third, int total) {
+    private void printThirdCardResult(final String label,
+                                      final Card third,final int total) {
         if (third != null) {
-            System.out.println(label + " draws: " + third.getFaceValue() + " of " + third.getSuit());
+            System.out.println(label + " draws: " +
+                    third.getFaceValue() + " of " + third.getSuit());
             System.out.println(label + " total: " + total);
         } else {
             System.out.println(label + " stands");
@@ -154,16 +167,18 @@ public class Baccarat implements Game{
 
     @Override
     public void playGame(){
-        System.out.println("Welcome to Baccarat. Enter who you would like to bet on (player/banker/tie): ");
+        System.out.println("Welcome to Baccarat. Enter who you " +
+                "would like to bet on (player/banker/tie): ");
         betOn = scanner.next().toLowerCase();
         System.out.println("Enter your bet amount (0 to exit the game) : ");
-        int bet = scanner.nextInt();
+        final int bet = scanner.nextInt();
         if (bet == 0){
             System.out.println("Exiting Baccarat");
             return;
         }
         if (bet < 0){
-            throw new IllegalArgumentException("Bet amount must be at least $1");
+            throw new IllegalArgumentException("Bet " +
+                    "amount must be at least $1");
         }
         dealInitialCards();
         System.out.println("Initial Cards:");
@@ -179,12 +194,12 @@ public class Baccarat implements Game{
         }
         System.out.println("\n \n Winner: " + determineWinner());
         System.out.println("You bet on: " + betOn);
-        int netWin = handleBet(bet);
+        final int netWin = handleBet(bet);
         updateBalance(netWin);
     }
 
     @Override
-    public void updateBalance(int amount){
+    public void updateBalance(final int amount){
         Casino.balance += amount;
         if (amount > 0) {
             System.out.println("Game result: +" + amount);
@@ -193,13 +208,36 @@ public class Baccarat implements Game{
         }
     }
 
-    public int getPlayerTotal(){return playerTotal;}
-    public int getBankerTotal(){return bankerTotal;}
-    public void setPlayerTotal(int playerTotal){this.playerTotal=playerTotal;}
-    public void setBankerTotal(int bankerTotal){this.bankerTotal=bankerTotal;}
-    public void setBetOn(String betOn){ this.betOn = betOn;}
-    public void setPlayerThird(Card card){this.playerThird = card;}
-    public List<Card> getPlayerHand(){return playerHand;}
-    public List<Card> getBankerHand(){return bankerHand;}
+    public int getPlayerTotal(){
+        return playerTotal;
+    }
+
+    public int getBankerTotal(){
+        return bankerTotal;
+    }
+
+    public void setPlayerTotal(final int playerTotal){
+        this.playerTotal=playerTotal;
+    }
+
+    public void setBankerTotal(final int bankerTotal){
+        this.bankerTotal=bankerTotal;
+    }
+
+    public void setBetOn(final String betOn){
+        this.betOn = betOn;
+    }
+
+    public void setPlayerThird(final Card card){
+        this.playerThird = card;
+    }
+
+    public List<Card> getPlayerHand(){
+        return playerHand;
+    }
+
+    public List<Card> getBankerHand(){
+        return bankerHand;
+    }
 
 }

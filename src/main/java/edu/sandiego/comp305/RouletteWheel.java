@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RouletteWheel {
-    private List<Color> wheel;
     private static final int MAX_SPACES_ON_WHEEL = 37;
+
+    private List<Color> wheel;
 
     public RouletteWheel(){
         wheel = new ArrayList<>();
@@ -13,6 +14,7 @@ public class RouletteWheel {
     }
 
     public List<Color> getWheel() {
+
         return wheel;
     }
 

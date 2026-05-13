@@ -1,4 +1,5 @@
 package edu.sandiego.comp305;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -28,21 +29,21 @@ public class TestDeckOfCards {
 
     @Test
     void testAceOfHeartsISCorrect(){
-        Card card = deck.get(13);
+        final Card card = deck.get(13);
         assertEquals(CardValues.ACE, card.getFaceValue());
         assertEquals(Suit.HEART, card.getSuit());
     }
 
     @Test
     void testAceOfDiamondsIsCorrect(){
-        Card card = deck.get(26);
+        final Card card = deck.get(26);
         assertEquals(CardValues.ACE, card.getFaceValue());
         assertEquals(Suit.DIAMOND, card.getSuit());
     }
 
     @Test
     void testAceOfSpadesIsCorrect(){
-        Card card = deck.get(39);
+        final Card card = deck.get(39);
         assertEquals(CardValues.ACE, card.getFaceValue());
         assertEquals(Suit.SPADE, card.getSuit());
     }
@@ -55,7 +56,7 @@ public class TestDeckOfCards {
 
     @Test
     void testShuffleChangesOrder(){
-        ArrayList<CardValues> originalValues = new ArrayList<>();
+        final ArrayList<CardValues> originalValues = new ArrayList<>();
         for(Card card : deck){
             originalValues.add(card.getFaceValue());
         }
@@ -65,7 +66,8 @@ public class TestDeckOfCards {
         boolean different = false;
 
         for(int i = 0; i < deck.size(); i++){
-            if(deck.get(i).getFaceValue().getCardValue() != originalValues.get(i).getCardValue()){
+            if(deck.get(i).getFaceValue().getCardValue()
+                    != originalValues.get(i).getCardValue()){
                 different = true;
             }
         }
@@ -80,14 +82,14 @@ public class TestDeckOfCards {
 
     @Test
     void testDealReturnsFirstCard(){
-        Card card = DeckOfCards.dealCard(deck);
+        final Card card = DeckOfCards.dealCard(deck);
         assertEquals(CardValues.ACE, card.getFaceValue());
         assertEquals(Suit.CLUB, card.getSuit());
     }
 
     @Test
     void testDealRemovesCardFromDeck(){
-        Card card = DeckOfCards.dealCard(deck);
+        final Card card = DeckOfCards.dealCard(deck);
         assertNotEquals(card, deck.getFirst());
     }
 

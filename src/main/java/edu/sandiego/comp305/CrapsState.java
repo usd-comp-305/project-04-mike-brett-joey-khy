@@ -1,5 +1,5 @@
 package edu.sandiego.comp305;
 
 public interface CrapsState {
-    String handleRoll(int roll, Craps context);
+    public abstract String handleRoll(final int roll,final Craps context);
 }

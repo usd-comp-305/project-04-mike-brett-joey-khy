@@ -5,14 +5,19 @@ import java.util.Scanner;
 public class Casino {
 
     public static int balance = 1000;
+
     public static String playerName;
+
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    private Casino(){
+    }
+
+    private static void main(final String[] args) {
         greetPlayer();
         while (isOpen()) {
             printMenu();
-            int choice = promptChoice();
+            final int choice = promptChoice();
             if (choice == 0) {
                 break;
             }
@@ -25,7 +30,8 @@ public class Casino {
         System.out.println("Welcome to USD Casino!");
         System.out.print("Enter your name: ");
         playerName = scanner.nextLine();
-        System.out.println("\nHello, " + playerName + "! You're starting with $" + balance + ".\n");
+        System.out.println("\nHello, " + playerName +
+                "! You're starting with $" + balance + ".\n");
     }
 
     private static int promptChoice() {
@@ -33,8 +39,8 @@ public class Casino {
         return scanner.nextInt();
     }
 
-    public static void runGame(int choice) {
-        Game selectedGame = GameFactory.getGame(choice);
+    public static void runGame(final int choice) {
+        final Game selectedGame = GameFactory.getGame(choice);
         if (selectedGame == null) {
             System.out.println("Invalid choice. Please try again.");
             return;
@@ -43,11 +49,13 @@ public class Casino {
     }
 
     public static boolean isOpen() {
+
         return balance > 0;
     }
 
     public static void exitCasino() {
-        System.out.println("\nGoodbye, " + playerName + "! You're leaving with $" + balance + ".");
+        System.out.println("\nGoodbye, " + playerName +
+                "! You're leaving with $" + balance + ".");
         scanner.close();
     }
 

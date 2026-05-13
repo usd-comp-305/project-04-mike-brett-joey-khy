@@ -5,15 +5,21 @@ import java.util.Scanner;
 
 public class Craps implements Game {
 
-    private CrapsState currentState;
-    private int point;
-    private int betAmount;
-    private Scanner scanner;
-    private Random random;
     private static final int DIE_FACE_COUNT = 6;
+
     private static final int DIE_MINIMUM_VALUE = 1;
 
-    public Craps(Scanner scanner, Random random) {
+    private CrapsState currentState;
+
+    private int point;
+
+    private int betAmount;
+
+    private Scanner scanner;
+
+    private Random random;
+
+    public Craps(final Scanner scanner,final Random random) {
         this.scanner = scanner;
         this.random = random;
         this.currentState = new ComingOutState();
@@ -21,45 +27,52 @@ public class Craps implements Game {
     }
 
     public CrapsState getCurrentState() {
+
         return currentState;
     }
 
-    public void setState(CrapsState state) {
+    public void setState(final CrapsState state) {
+
         this.currentState = state;
     }
 
     public int getPoint() {
+
         return point;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(final int point) {
+
         this.point = point;
     }
 
     public int rollDie() {
-        return random.nextInt(DIE_FACE_COUNT) + DIE_MINIMUM_VALUE;
+        return random.nextInt(DIE_FACE_COUNT)
+                + DIE_MINIMUM_VALUE;
     }
 
     public int roll() {
+
         return rollDie() + rollDie();
     }
 
     @Override
-    public int handleBet(int amount) {
+    public int handleBet(final int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Bet amount must be at least $1");
+            throw new IllegalArgumentException("Bet amount " +
+                    "must be at least $1");
         }
         this.betAmount = amount;
 
         while (true) {
-            int roll = roll();
+            final int roll = roll();
             System.out.println("You rolled: " + roll);
 
             if (point != 0 && currentState instanceof PointPhaseState) {
                 System.out.println("Point is: " + point);
             }
 
-            String outcome = currentState.handleRoll(roll, this);
+            final String outcome = currentState.handleRoll(roll, this);
 
             switch (outcome) {
                 case "WIN":
@@ -69,7 +82,8 @@ public class Craps implements Game {
                     System.out.println("You lose.");
                     return -betAmount;
                 case "POINT_SET":
-                    System.out.println("Point set: " + point + ". Keep rolling!");
+                    System.out.println("Point set: " +
+                            point + ". Keep rolling!");
                     break;
                 case "CONTINUE":
                     System.out.println("No result. Roll again.");
@@ -86,23 +100,25 @@ public class Craps implements Game {
         while (keepPlaying) {
             System.out.println("Your balance: $" + Casino.balance);
             System.out.print("Enter your bet amount (or 0 to quit): $");
-            int bet = scanner.nextInt();
+            final int bet = scanner.nextInt();
 
             if (bet == 0) {
                 keepPlaying = false;
             } else if (bet > Casino.balance) {
-                System.out.println("Insufficient balance. Please bet $" + Casino.balance + " or less.");
+                System.out.println("Insufficient balance. " +
+                        "Please bet $" + Casino.balance + " or less.");
             } else {
-                int netChange = handleBet(bet);
+                final int netChange = handleBet(bet);
                 updateBalance(netChange);
             }
         }
 
-        System.out.println("Thanks for playing Craps! Final balance: $" + Casino.balance);
+        System.out.println("Thanks for playing Craps! " +
+                "Final balance: $" + Casino.balance);
     }
 
     @Override
-    public void updateBalance(int amount) {
+    public void updateBalance(final int amount) {
         Casino.balance += amount;
         if (amount > 0) {
             System.out.println("Game result: +" + amount);

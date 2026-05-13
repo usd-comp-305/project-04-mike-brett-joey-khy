@@ -11,8 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PointPhaseStateTest {
 
     private PointPhaseState state;
+
     private Craps craps;
+
     private Scanner scanner;
+
     private Random rng;
 
     @BeforeEach
