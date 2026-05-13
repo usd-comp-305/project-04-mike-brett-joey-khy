@@ -9,7 +9,8 @@ public class Casino {
 
     private static String playerName;
 
-    private static Scanner scanner = new Scanner(System.in,StandardCharsets.UTF_8);
+    private static Scanner scanner = new Scanner(System.in,
+            StandardCharsets.UTF_8);
 
     private Casino(){
     }

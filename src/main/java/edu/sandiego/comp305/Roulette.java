@@ -5,6 +5,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Roulette implements Game{
+    private static final int SINGLE_OPTION_MULTIPLIER = 35;
+
+    private static final int EVEN_OR_ODD_FACTOR = 2;
+
+    private static final int MAX_WAGER_TYPE = 6;
+
+    private static final int MAX_ROULETTE_NUMBER = 36;
+
     private static final int MAX_SPACES_ON_WHEEL = 37;
 
     private RouletteWheel wheel;
@@ -18,14 +26,6 @@ public class Roulette implements Game{
     private int specificNumberChoice;
 
     private int lastSpinNumber;
-
-    private static final int SINGLE_OPTION_MULTIPLIER = 35;
-
-    private static final int EVEN_OR_ODD_FACTOR = 2;
-
-    private static final int MAX_WAGER_TYPE = 6;
-
-    private static final int MAX_ROULETTE_NUMBER = 36;
 
     private Color lastSpinColor;
 
