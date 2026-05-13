@@ -14,6 +14,8 @@ public class Roulette implements Game{
     private int lastSpinNumber;
     private final int SINGLE_OPTION_MULTIPLIER = 35;
     private final int EVEN_OR_ODD_FACTOR = 2;
+    private final int MAX_WAGER_TYPE = 6;
+    private final int MAX_ROULETTE_NUMBER = 36;
     private Color lastSpinColor;
 
     public Roulette(Scanner scanner, Random rng){
@@ -97,15 +99,15 @@ public class Roulette implements Game{
         System.out.println("6 for a specific number");
 
         WagerType = scanner.nextInt();
-        if (WagerType <= 0 || WagerType > 6){
+        if (WagerType <= 0 || WagerType > MAX_WAGER_TYPE){
             System.out.println("Invalid: Answer must be between 1-6. Enter a valid wager.");
             return getUserWager();
         }
 
-        if (WagerType == 6){
+        if (WagerType == MAX_WAGER_TYPE){
             System.out.println("Enter the number you would like to bet on: ");
             specificNumberChoice = scanner.nextInt();
-            if (specificNumberChoice < 0 || specificNumberChoice > 36){
+            if (specificNumberChoice < 0 || specificNumberChoice > MAX_ROULETTE_NUMBER){
                 System.out.println("Invalid: Number must be between 0-36. Restarting...");
                 return getUserWager();
             }

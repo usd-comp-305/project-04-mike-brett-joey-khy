@@ -15,7 +15,6 @@ public class RouletteTest {
     private Random mockRng;
     private Scanner mockScanner;
     private final int MAX_SPACES_ON_WHEEL = 37;
-    private final int MIN_WHEEL_SIZE = 0;
     private int amountWagered = 10;
 
     @BeforeEach
