@@ -15,7 +15,7 @@ public class Craps implements Game {
 
     private int betAmount;
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     private Random random;
 
@@ -88,6 +88,8 @@ public class Craps implements Game {
                 case "CONTINUE":
                     System.out.println("No result. Roll again.");
                     break;
+                default:
+                    break;
             }
         }
     }
@@ -119,7 +121,7 @@ public class Craps implements Game {
 
     @Override
     public void updateBalance(final int amount) {
-        Casino.balance += amount;
+        Casino.addToBalance(amount);
         if (amount > 0) {
             System.out.println("Game result: +" + amount);
         } else {

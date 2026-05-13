@@ -1,5 +1,6 @@
 package edu.sandiego.comp305;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ public class GameFactory {
     private GameFactory(){}
 
     public static Game getGame(final int choice) {
-        final Scanner scanner = new Scanner(System.in);
+        final Scanner scanner = new Scanner(System.in, StandardCharsets.UTF_8);
         final Random rng = new Random();
         switch (choice) {
             case 1: return new Slots(scanner, rng);

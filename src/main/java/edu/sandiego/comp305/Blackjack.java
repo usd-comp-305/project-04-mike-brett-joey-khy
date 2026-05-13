@@ -248,7 +248,7 @@ public class Blackjack implements Game {
     @Override
     public void updateBalance(final int amountWonOrLost) {
 
-        Casino.balance += amountWonOrLost;
+        Casino.addToBalance(amountWonOrLost);
     }
 
 

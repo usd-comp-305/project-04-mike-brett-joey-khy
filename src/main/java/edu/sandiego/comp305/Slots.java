@@ -117,7 +117,7 @@ public class Slots implements Game{
 
     @Override
     public void updateBalance(final int amount){
-        Casino.balance += amount;
+        Casino.addToBalance(amount);
         if (amount > 0) {
             System.out.println("Game result: +" + amount);
         } else {

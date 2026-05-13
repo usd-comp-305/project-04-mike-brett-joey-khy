@@ -9,9 +9,9 @@ public class Roulette implements Game{
 
     private RouletteWheel wheel;
 
-    private Random rng;
+    private final Random rng;
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     private int WagerType;
 
@@ -19,13 +19,13 @@ public class Roulette implements Game{
 
     private int lastSpinNumber;
 
-    private final int SINGLE_OPTION_MULTIPLIER = 35;
+    private static final int SINGLE_OPTION_MULTIPLIER = 35;
 
-    private final int EVEN_OR_ODD_FACTOR = 2;
+    private static final int EVEN_OR_ODD_FACTOR = 2;
 
-    private final int MAX_WAGER_TYPE = 6;
+    private static final int MAX_WAGER_TYPE = 6;
 
-    private final int MAX_ROULETTE_NUMBER = 36;
+    private static final int MAX_ROULETTE_NUMBER = 36;
 
     private Color lastSpinColor;
 
@@ -112,7 +112,7 @@ public class Roulette implements Game{
 
     @Override
     public void updateBalance(final int amount) {
-        Casino.balance += amount;
+        Casino.addToBalance(amount);
         if (amount > 0){
             System.out.println("Congrats! You won $" + amount);
         }

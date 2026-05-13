@@ -1,14 +1,15 @@
 package edu.sandiego.comp305;
 
 import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
 
 public class Casino {
 
-    public static int balance = 1000;
+    static int balance = 1000;
 
-    public static String playerName;
+    private static String playerName;
 
-    private static Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner = new Scanner(System.in,StandardCharsets.UTF_8);
 
     private Casino(){
     }
@@ -70,4 +71,10 @@ public class Casino {
         System.out.println("0. Exit");
         System.out.println("------------------");
     }
+
+    static void addToBalance(final int amount){
+        balance += amount;
+    }
 }
+
+

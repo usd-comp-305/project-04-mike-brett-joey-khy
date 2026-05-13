@@ -21,7 +21,7 @@ public class Baccarat implements Game{
 
     private List<Card> bankerHand;
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public Baccarat(final Scanner scanner){
         this.scanner = scanner;
@@ -200,7 +200,7 @@ public class Baccarat implements Game{
 
     @Override
     public void updateBalance(final int amount){
-        Casino.balance += amount;
+        Casino.addToBalance(amount);
         if (amount > 0) {
             System.out.println("Game result: +" + amount);
         } else {
