@@ -21,32 +21,44 @@ public class Slots implements Game{
         return spinResults;
     }
 
-    public int calculatePayout(SlotSymbols result[], int betAmount) {
+    private boolean isAllMatch(SlotSymbols[] result){
         SlotSymbols firstSymbol = result[0];
-        for (int i = 0; i < result.length; i++) {
-            if (result[i] != firstSymbol) {
-                return -betAmount;
+        for (SlotSymbols slotSymbols : result) {
+            if (slotSymbols != firstSymbol) {
+                return false;
             }
         }
-        switch (firstSymbol) {
+        return true;
+    }
+
+    private int getMultiplier(SlotSymbols symbol){
+        switch (symbol) {
             case SEVEN:
-                return betAmount * 7;
+                return 7;
             case BELL:
-                return betAmount * 6;
+                return 6;
             case GRAPE:
-                return betAmount * 5;
+                return 5;
             case LEMON:
-                return betAmount * 4;
+                return 4;
             case CHERRY:
-                return betAmount * 3;
+                return 3;
             case DIAMOND:
-                return betAmount * 12;
+                return 12;
             case GOLD_BAR:
-                return betAmount * 8;
+                return 8;
             case STRAWBERRY:
-                return betAmount * 2;
+                return 2;
             default:
-                return -betAmount;
+                return -1;
+        }
+    }
+
+    public int calculatePayout(SlotSymbols[] result, int betAmount) {
+        if (isAllMatch(result)){
+            return getMultiplier(result[0]) * betAmount;
+        } else {
+            return -betAmount;
         }
     }
 

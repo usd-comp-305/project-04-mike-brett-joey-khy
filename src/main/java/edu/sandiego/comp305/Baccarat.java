@@ -28,20 +28,27 @@ public class Baccarat implements Game{
         this.bankerHand = new ArrayList<>();
     }
 
+    private int dealHand(List<Card> hand){
+        Card card1 = DeckOfCards.dealCard(deck);
+        Card card2 = DeckOfCards.dealCard(deck);
+        hand.add(card1);
+        hand.add(card2);
+        return (getCardValue(card1)+getCardValue(card2)) % 10;
+    }
+
+    private Card drawCard(List<Card> hand, int currentTotal){
+        Card card = DeckOfCards.dealCard(deck);
+        hand.add(card);
+        return card;
+    }
+
+    private int addCardValue(int currentTotal, Card card){
+        return (currentTotal + getCardValue(card)) % 10;
+    }
+
     public void dealInitialCards(){
-        Card playerCard1 = DeckOfCards.dealCard(deck);
-        Card bankerCard1 = DeckOfCards.dealCard(deck);
-        Card playerCard2 = DeckOfCards.dealCard(deck);
-        Card bankerCard2 = DeckOfCards.dealCard(deck);
-
-        playerHand.add(playerCard1);
-        bankerHand.add(bankerCard1);
-        playerHand.add(playerCard2);
-        bankerHand.add(bankerCard2);
-
-        playerTotal = (getCardValue(playerCard1) + getCardValue(playerCard2)) % 10;
-        bankerTotal = (getCardValue(bankerCard1) + getCardValue(bankerCard2)) % 10;
-
+        playerTotal = dealHand(playerHand);
+        bankerTotal = dealHand(bankerHand);
     }
 
     public void drawPlayerThirdCard(){
@@ -49,53 +56,43 @@ public class Baccarat implements Game{
             return;
         }
         if (playerTotal <= 5){
-            playerThird = DeckOfCards.dealCard(deck);
-            playerHand.add(playerThird);
-            playerTotal = (playerTotal + getCardValue(playerThird)) % 10;
+            playerThird = drawCard(playerHand, playerTotal);
+            playerTotal = addCardValue(playerTotal, playerThird);
         }
     }
 
-    public void drawBankerThirdCard(){
-        if (isNatural()){
+    public void drawBankerThirdCard() {
+        if (isNatural()) {
             return;
         }
         if (playerThird == null) {
-            if (bankerTotal <= 5 ) {
-                bankerThird = DeckOfCards.dealCard(deck);
-                bankerHand.add(bankerThird);
-                bankerTotal = (bankerTotal + getCardValue(bankerThird)) % 10;
+            if (bankerTotal <= 5) {
+                bankerThird = drawCard(bankerHand, bankerTotal);
+                bankerTotal = addCardValue(bankerTotal, bankerThird);
             }
         } else {
-            int playerThirdCard = getCardValue(playerThird);
-            boolean bankerDraw = false;
-            switch (bankerTotal) {
-                case 0: case 1: case 2:
-                    bankerDraw = true;
-                    break;
-                case 3:
-                    bankerDraw = (playerThirdCard != 8);
-                    break;
-                case 4:
-                    bankerDraw = (playerThirdCard >= 2 && playerThirdCard <= 7);
-                    break;
-                case 5:
-                    bankerDraw = (playerThirdCard >= 4 && playerThirdCard <= 7);
-                    break;
-                case 6:
-                    bankerDraw = (playerThirdCard >= 6 && playerThirdCard <= 7);
-                    break;
-                case 7:
-                    bankerDraw = false;
-                    break;
-                default:
-                    bankerDraw = false;
-                    break;
+            if (shouldBankerDraw()) {
+                bankerThird = drawCard(bankerHand, bankerTotal);
+                bankerTotal = addCardValue(bankerTotal, bankerThird);
             }
-            if (bankerDraw){
-                bankerThird = DeckOfCards.dealCard(deck);
-                bankerHand.add(bankerThird);
-                bankerTotal = (bankerTotal + getCardValue(bankerThird)) % 10;
-            }
+        }
+    }
+
+    private boolean shouldBankerDraw(){
+        int playerThirdValue = getCardValue(playerThird);
+        switch (bankerTotal) {
+            case 0: case 1: case 2:
+                return true;
+            case 3:
+                return (playerThirdValue!=8);
+            case 4:
+                return (playerThirdValue >= 2 && playerThirdValue <= 7);
+            case 5:
+                return (playerThirdValue >= 4 && playerThirdValue <= 7);
+            case 6:
+                return (playerThirdValue >= 6 && playerThirdValue <= 7);
+            default:
+                return false;
         }
     }
 
@@ -146,6 +143,15 @@ public class Baccarat implements Game{
         System.out.println("    Total of " + total);
     }
 
+    private void printThirdCardResult(String label, Card third, int total) {
+        if (third != null) {
+            System.out.println(label + " draws: " + third.getFaceValue() + " of " + third.getSuit());
+            System.out.println(label + " total: " + total);
+        } else {
+            System.out.println(label + " stands");
+        }
+    }
+
     @Override
     public void playGame(){
         System.out.println("Welcome to Baccarat. Enter who you would like to bet on (player/banker/tie): ");
@@ -167,20 +173,9 @@ public class Baccarat implements Game{
             System.out.println("\n Natural! No third cards ");
         } else {
             drawPlayerThirdCard();
-            if (playerThird != null){
-                System.out.println("Player draws: " + playerThird.getFaceValue() + " of " + playerThird.getSuit());
-                System.out.println("Player total: " + playerTotal);
-            } else {
-                System.out.println("Player stands ");
-            }
-
+            printThirdCardResult("Player",playerThird, playerTotal);
             drawBankerThirdCard();
-            if (bankerThird != null){
-                System.out.println("Banker draws: " + bankerThird.getFaceValue() + " of " + bankerThird.getSuit());
-                System.out.println("Banker total: " + bankerTotal);
-            } else {
-                System.out.println("Banker stands ");
-            }
+            printThirdCardResult("Banker",bankerThird,bankerTotal);
         }
         System.out.println("\n \n Winner: " + determineWinner());
         System.out.println("You bet on: " + betOn);
