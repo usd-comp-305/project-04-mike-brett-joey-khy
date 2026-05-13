@@ -91,13 +91,18 @@ class Baccarat {
   - List<Card> bankerHand
   + Baccarat(Scanner scanner)
   + void dealInitialCards()
+  - int dealHand(List<Card> hand)
+  - Card drawCard(List<Card> hand, int currentTotal)
+  - int addCardValue(int currentTotal, Card card)
   + void drawPlayerThirdCard()
   + void drawBankerThirdCard()
+  - boolean shouldBankerDraw()
   + String determineWinner()
   + {static} int getCardValue(Card card)
   + boolean isNatural()
   + int handleBet(int amount)
   + void printHand(String option, List<Card> hand, int total)
+  - void printThirdCardResult(String label, Card third, int total)
   + void playGame()
   + void updateBalance(int amount)
   + int getPlayerTotal()
@@ -144,8 +149,10 @@ class PointPhaseState {
 class Slots {
   - Random rng
   - SlotSymbols[] symbols
+  + Slots(Scanner scanner, Random rng)
   + SlotSymbols[] spin()
-  + void Slots(Scanner scanner, Random rng)
+  - boolean isAllMatch(SlotSymbols[] result)
+  - int getMultiplier(SlotSymbols symbol)
   + int calculatePayout(SlotSymbols[] result, int betAmount)
   + void printResult(SlotSymbols[] results)
   + int handleBet(int amount)
