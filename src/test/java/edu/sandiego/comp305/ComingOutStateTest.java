@@ -19,6 +19,8 @@ public class ComingOutStateTest {
 
     @BeforeEach
     void setUp() {
+        scanner = new Scanner("");
+        rng = new Random(0);
         state = new ComingOutState();
         craps = new Craps(scanner, rng);
     }

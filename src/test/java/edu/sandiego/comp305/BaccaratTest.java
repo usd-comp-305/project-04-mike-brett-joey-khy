@@ -15,6 +15,7 @@ public class BaccaratTest {
 
     @BeforeEach
     void setUp(){
+        scanner = new Scanner("");
         baccarat = new Baccarat(scanner);
         Casino.addToBalance(STARTING_BALANCE - Casino.balance);
     }

@@ -20,6 +20,8 @@ public class PointPhaseStateTest {
 
     @BeforeEach
     void setUp() {
+        scanner = new Scanner("");
+        rng = new Random(0);
         state = new PointPhaseState();
         craps = new Craps(scanner,rng);
         craps.setPoint(6);

@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TestDeckOfCards {
 
-    public ArrayList<Card> deck;
+    private ArrayList<Card> deck;
 
 
     @BeforeEach
