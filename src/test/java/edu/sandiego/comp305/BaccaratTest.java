@@ -7,12 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import java.util.Scanner;
 
 public class BaccaratTest {
+    private static final int STARTING_BALANCE = 1000;
 
     private Baccarat baccarat;
 
     private Scanner scanner;
-
-    private static final int STARTING_BALANCE = 1000;
 
     @BeforeEach
     void setUp(){
